@@ -493,7 +493,6 @@ public class BillTest {
 	}
 	
 	@Test
-<<<<<<< HEAD
 	public void sneakTest26() {
 		if (test == null ||
 				!test.getIsCommonsBill() ||
@@ -996,7 +995,8 @@ public class BillTest {
 				test.stateExpected("withdrawn") &&
 				test.houseStateExpected("Null") &&
 				test.senateStateExpected("Null"));
-=======
+	}
+
 	public void sneakTest48() {
 		
 	}
@@ -1034,7 +1034,6 @@ public class BillTest {
 				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
 		assertTrue(!test.royalAssent() && !test.isIsCommonsBill() &&
 				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
->>>>>>> 5109b3cbf44ba47db060521849e6eaa1e08f86c3
 	}
 
 }
