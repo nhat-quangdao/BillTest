@@ -493,6 +493,7 @@ public class BillTest {
 	}
 	
 	@Test
+<<<<<<< HEAD
 	public void sneakTest26() {
 		if (test == null ||
 				!test.getIsCommonsBill() ||
@@ -995,6 +996,45 @@ public class BillTest {
 				test.stateExpected("withdrawn") &&
 				test.houseStateExpected("Null") &&
 				test.senateStateExpected("Null"));
+=======
+	public void sneakTest48() {
+		
+	}
+	
+	@Test
+	public void sneakTest49() {
+		
+	}
+	
+	@Test
+	public void sneakTest50() {
+		assertTrue(test != null && test.isIsCommonsBill() && test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && !test.isIsCommonsBill() && 
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
+		assertTrue(!test.introduceInSenate() && !test.isIsCommonsBill() &&
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
+	}
+	
+	@Test
+	public void sneakTest51() {
+		assertTrue(test != null && test.isIsCommonsBill() && test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && !test.isIsCommonsBill() && 
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
+		assertTrue(!test.royalAssent() && !test.isIsCommonsBill() &&
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
+	}
+	
+	@Test
+	public void sneakTest52() {
+		assertTrue(test != null && test.isIsCommonsBill() && test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && !test.isIsCommonsBill() && 
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
+		assertTrue(!test.royalAssent() && !test.isIsCommonsBill() &&
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
+>>>>>>> 5109b3cbf44ba47db060521849e6eaa1e08f86c3
 	}
 
 }
