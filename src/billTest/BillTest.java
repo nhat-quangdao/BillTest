@@ -421,5 +421,89 @@ public class BillTest {
 				test.senateStateExpected("Null") && test.houseStateExpected("firstReading") && 
 				test.stateExpected("inHouseOfCommons"));
 	}
+	
+	@Test
+	public void sneakTest21() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(!test.votePasses() &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest22() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(!test.voteFails() &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest23() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(!test.modify() &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest24() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(!test.withdraw() &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest25() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(!test.royalAssent() &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest25() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(!test.royalAssent() &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+	}
 
 }
