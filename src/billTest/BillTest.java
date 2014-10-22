@@ -31,7 +31,8 @@ public class BillTest {
 	public void tearDown() throws Exception {
 		test = null;
 	}
-
+	
+	//Corresponds to Test Case #1
 	@Test
 	public void conformanceTest1() {
 		if (test == null ||
@@ -60,6 +61,7 @@ public class BillTest {
 		
 	}
 	
+	//Corresponds to Test Case #2
 	@Test
 	public void conformanceTest2() {
 		if (test == null ||
@@ -83,6 +85,7 @@ public class BillTest {
 		
 	}
 	
+	//Corresponds to Test Case #3
 	@Test
 	public void conformanceTest3() {
 		if (test == null ||
@@ -108,6 +111,7 @@ public class BillTest {
 		
 	}
 	
+	//Corresponds to Test Case #4
 	@Test
 	public void conformanceTest4() {
 		if (test == null ||
@@ -132,6 +136,7 @@ public class BillTest {
 		}
 	}
 	
+	//Corresponds to Test Case #5
 	@Test
 	public void conformanceTest5() {
 		if (test == null ||
@@ -159,6 +164,7 @@ public class BillTest {
 		}
 	}
 	
+	//Corresponds to Test Case #6
 	@Test
 	public void conformanceTest6() {
 		if (test == null ||
@@ -186,6 +192,7 @@ public class BillTest {
 		}
 	}
 	
+	//Corresponds to Test Case #7
 	@Test
 	public void conformanceTest7() {
 		if (test == null ||
@@ -217,6 +224,7 @@ public class BillTest {
 			
 	}
 	
+	//Corresponds to Test Case #8
 	@Test
 	public void conformanceTest8() {
 		assertTrue(test != null &&
@@ -232,6 +240,7 @@ public class BillTest {
 		assertTrue(test.withdraw() && test.stateExpected("withdrawn") && test.houseStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #9
 	@Test
 	public void conformanceTest9() {
 		assertTrue(test != null &&
@@ -252,6 +261,7 @@ public class BillTest {
 
 	}
 	
+	//Corresponds to Test Case #10
 	@Test
 	public void conformanceTest10() {
 		assertTrue(test != null &&
@@ -270,6 +280,7 @@ public class BillTest {
 		
 	}
 	
+	//Corresponds to Test Case #11
 	@Test
 	public void conformanceTest11() {
 		assertTrue(test != null && 
@@ -283,6 +294,7 @@ public class BillTest {
 		assertTrue(test.voteFails() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #12
 	@Test
 	public void conformanceTest12() {
 		assertTrue(test != null && 
@@ -296,6 +308,7 @@ public class BillTest {
 		assertTrue(test.withdraw() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));	
 	}
 	
+	//Corresponds to Test Case #13
 	@Test
 	public void conformanceTest13() {
 		assertTrue(test != null && 
@@ -310,6 +323,7 @@ public class BillTest {
 		assertTrue(test.voteFails() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #14
 	@Test
 	public void conformanceTest14() {
 		assertTrue(test != null && 
@@ -324,6 +338,7 @@ public class BillTest {
 		assertTrue(test.withdraw() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #15
 	@Test
 	public void conformanceTest15() {
 		assertTrue(test != null && 
@@ -339,6 +354,7 @@ public class BillTest {
 		assertTrue(test.voteFails() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #16
 	@Test
 	public void conformanceTest16() {
 		assertTrue(test != null && 
@@ -354,6 +370,7 @@ public class BillTest {
 		assertTrue(test.withdraw() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #17
 	@Test
 	public void conformanceTest17() {
 		assertTrue(test != null && 
@@ -370,6 +387,7 @@ public class BillTest {
 		assertTrue(test.voteFails() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #18
 	@Test
 	public void conformanceTest18() {
 		assertTrue(test != null && 
@@ -386,6 +404,7 @@ public class BillTest {
 		assertTrue(test.withdraw() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #19
 	@Test
 	public void conformanceTest19() {
 		assertTrue(test != null && 
@@ -404,6 +423,7 @@ public class BillTest {
 		assertTrue(test.royalAssent() && test.stateExpected("actOfParliament"));
 	}
 	
+	//Corresponds to Test Case #20
 	@Test
 	public void conformanceTest20() {
 		assertTrue(test != null && 
@@ -422,6 +442,7 @@ public class BillTest {
 				test.stateExpected("inHouseOfCommons"));
 	}
 	
+	//Corresponds to Test Case #21
 	@Test
 	public void sneakTest21() {
 		assertTrue(test != null && 
@@ -436,6 +457,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #22
 	@Test
 	public void sneakTest22() {
 		assertTrue(test != null && 
@@ -450,6 +472,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #23
 	@Test
 	public void sneakTest23() {
 		assertTrue(test != null && 
@@ -463,7 +486,7 @@ public class BillTest {
 				test.houseStateExpected("Null") && 
 				test.senateStateExpected("Null"));
 	}
-	
+	//Corresponds to Test Case #24
 	@Test
 	public void sneakTest24() {
 		assertTrue(test != null && 
@@ -478,6 +501,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #25
 	@Test
 	public void sneakTest25() {
 		assertTrue(test != null && 
@@ -492,6 +516,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #26
 	@Test
 	public void sneakTest26() {
 		if (test == null ||
@@ -514,6 +539,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #27
 	@Test
 	public void sneakTest27() {
 		if (test == null ||
@@ -536,6 +562,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #28
 	@Test
 	public void sneakTest28() {
 		if (test == null ||
@@ -558,6 +585,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #29
 	@Test
 	public void sneakTest29() {
 		if (test == null ||
@@ -580,6 +608,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #30
 	@Test
 	public void sneakTest30() {
 		if (test == null ||
@@ -605,6 +634,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #31
 	@Test
 	public void sneakTest31() {
 		if (test == null ||
@@ -630,6 +660,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #32
 	@Test
 	public void sneakTest32() {
 		if (test == null ||
@@ -655,6 +686,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #33
 	@Test
 	public void sneakTest33() {
 		if (test == null ||
@@ -680,6 +712,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #34
 	@Test
 	public void sneakTest34() {
 		assertTrue(test != null &&
@@ -698,6 +731,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #35
 	@Test
 	public void sneakTest35() {
 		assertTrue(test != null &&
@@ -716,6 +750,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #36
 	@Test
 	public void sneakTest36() {
 		assertTrue(test != null &&
@@ -734,6 +769,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #37
 	@Test
 	public void sneakTest37() {
 		assertTrue(test != null &&
@@ -752,6 +788,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #38
 	@Test
 	public void sneakTest38() {
 		assertTrue(test != null &&
@@ -771,6 +808,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #39
 	@Test
 	public void sneakTest39() {
 		assertTrue(test != null &&
@@ -790,6 +828,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #40
 	@Test
 	public void sneakTest40() {
 		assertTrue(test != null &&
@@ -809,6 +848,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #41
 	@Test
 	public void sneakTest41() {
 		assertTrue(test != null &&
@@ -828,7 +868,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
-	
+	//Corresponds to Test Case #42
 	@Test
 	public void sneakTest42() {
 		if (test == null ||
@@ -857,6 +897,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #43
 	@Test
 	public void sneakTest43() {
 		if (test == null ||
@@ -885,6 +926,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #44
 	@Test
 	public void sneakTest44() {
 		if (test == null ||
@@ -913,6 +955,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #45
 	@Test
 	public void sneakTest45() {
 		if (test == null ||
@@ -941,6 +984,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #46
 	@Test
 	public void sneakTest46() {
 		if (test == null ||
@@ -969,6 +1013,7 @@ public class BillTest {
 				test.senateStateExpected("Null"));
 	}
 	
+	//Corresponds to Test Case #47
 	@Test
 	public void sneakTest47() {
 		if (test == null ||
@@ -996,16 +1041,20 @@ public class BillTest {
 				test.houseStateExpected("Null") &&
 				test.senateStateExpected("Null"));
 	}
-
+	
+	//Corresponds to Test Case #48
+	@Test
 	public void sneakTest48() {
 		
 	}
 	
+	//Corresponds to Test Case #49
 	@Test
 	public void sneakTest49() {
 		
 	}
 	
+	//Corresponds to Test Case #50
 	@Test
 	public void sneakTest50() {
 		assertTrue(test != null && test.isIsCommonsBill() && test.stateExpected("inPreparation") &&
@@ -1016,6 +1065,7 @@ public class BillTest {
 				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
 	}
 	
+	//Corresponds to Test Case #51
 	@Test
 	public void sneakTest51() {
 		assertTrue(test != null && test.isIsCommonsBill() && test.stateExpected("inPreparation") &&
@@ -1026,6 +1076,7 @@ public class BillTest {
 				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
 	}
 	
+	//Corresponds to Test Case #52
 	@Test
 	public void sneakTest52() {
 		assertTrue(test != null && test.isIsCommonsBill() && test.stateExpected("inPreparation") &&
