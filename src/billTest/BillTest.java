@@ -423,10 +423,6 @@ public class BillTest {
 	}
 	
 	@Test
-<<<<<<< HEAD
-	public void sneakPathTest21() {
-		
-=======
 	public void sneakTest21() {
 		assertTrue(test != null && 
 				test.isIsCommonsBill() && 
@@ -497,18 +493,43 @@ public class BillTest {
 	}
 	
 	@Test
-	public void sneakTest26() {
-		assertTrue(test != null && 
-				test.isIsCommonsBill() && 
-				test.stateExpected("inPreparation") && 
-				test.houseStateExpected("Null") && 
-				test.senateStateExpected("Null"));
-		assertTrue(!test.royalAssent() &&
-				test.getIsCommonsBill() &&
-				test.stateExpected("inPreparation") &&
-				test.houseStateExpected("Null") && 
-				test.senateStateExpected("Null"));
->>>>>>> 57583b0dfde2465f39d78f127e43964200c7dd39
+	public void sneakTest48() {
+		
+	}
+	
+	@Test
+	public void sneakTest49() {
+		
+	}
+	
+	@Test
+	public void sneakTest50() {
+		assertTrue(test != null && test.isIsCommonsBill() && test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && !test.isIsCommonsBill() && 
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
+		assertTrue(!test.introduceInSenate() && !test.isIsCommonsBill() &&
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
+	}
+	
+	@Test
+	public void sneakTest51() {
+		assertTrue(test != null && test.isIsCommonsBill() && test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && !test.isIsCommonsBill() && 
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
+		assertTrue(!test.royalAssent() && !test.isIsCommonsBill() &&
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
+	}
+	
+	@Test
+	public void sneakTest52() {
+		assertTrue(test != null && test.isIsCommonsBill() && test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") && test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && !test.isIsCommonsBill() && 
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
+		assertTrue(!test.royalAssent() && !test.isIsCommonsBill() &&
+				test.stateExpected("inSenate") && test.senateStateExpected("firstReadingS"));
 	}
 
 }
