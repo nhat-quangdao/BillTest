@@ -423,10 +423,6 @@ public class BillTest {
 	}
 	
 	@Test
-<<<<<<< HEAD
-	public void sneakPathTest21() {
-		
-=======
 	public void sneakTest21() {
 		assertTrue(test != null && 
 				test.isIsCommonsBill() && 
@@ -498,17 +494,507 @@ public class BillTest {
 	
 	@Test
 	public void sneakTest26() {
-		assertTrue(test != null && 
-				test.isIsCommonsBill() && 
-				test.stateExpected("inPreparation") && 
-				test.houseStateExpected("Null") && 
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		assertTrue(!test.modify() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("firstReading") &&
 				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest27() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		assertTrue(!test.introduceInHouse() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("firstReading") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest28() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		assertTrue(!test.introduceInSenate() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("firstReading") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest29() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
 		assertTrue(!test.royalAssent() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("firstReading") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest30() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		if (!test.votePasses() || !test.houseStateExpected("secondReading")) {
+			fail("votePasses failed");
+		}
+		
+		assertTrue(!test.modify() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("secondReading") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest31() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		if (!test.votePasses() || !test.houseStateExpected("secondReading")) {
+			fail("votePasses failed");
+		}
+		
+		assertTrue(!test.introduceInHouse() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("secondReading") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest32() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		if (!test.votePasses() || !test.houseStateExpected("secondReading")) {
+			fail("votePasses failed");
+		}
+		
+		assertTrue(!test.introduceInSenate() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("secondReading") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest33() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		if (!test.votePasses() || !test.houseStateExpected("secondReading")) {
+			fail("votePasses failed");
+		}
+		
+		assertTrue(!test.royalAssent() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("secondReading") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest34() {
+		assertTrue(test != null &&
 				test.getIsCommonsBill() &&
 				test.stateExpected("inPreparation") &&
-				test.houseStateExpected("Null") && 
+				test.houseStateExpected("Null") &&
 				test.senateStateExpected("Null"));
->>>>>>> 57583b0dfde2465f39d78f127e43964200c7dd39
+		assertTrue(test.introduceInHouse() && test.stateExpected("inHouseOfCommons") && test.houseStateExpected("firstReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("secondReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("committeeConsideration"));
+		
+		assertTrue(!test.modify() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("committeeConsideration") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest35() {
+		assertTrue(test != null &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInHouse() && test.stateExpected("inHouseOfCommons") && test.houseStateExpected("firstReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("secondReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("committeeConsideration"));
+		
+		assertTrue(!test.introduceInHouse() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("committeeConsideration") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest36() {
+		assertTrue(test != null &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInHouse() && test.stateExpected("inHouseOfCommons") && test.houseStateExpected("firstReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("secondReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("committeeConsideration"));
+		
+		assertTrue(!test.introduceInSenate() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("committeeConsideration") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest37() {
+		assertTrue(test != null &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInHouse() && test.stateExpected("inHouseOfCommons") && test.houseStateExpected("firstReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("secondReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("committeeConsideration"));
+		
+		assertTrue(!test.royalAssent() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("committeeConsideration") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest38() {
+		assertTrue(test != null &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInHouse() && test.stateExpected("inHouseOfCommons") && test.houseStateExpected("firstReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("secondReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("committeeConsideration"));
+		assertTrue(test.votePasses() && test.houseStateExpected("thirdReading"));
+		
+		assertTrue(!test.modify() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("thirdReading") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest39() {
+		assertTrue(test != null &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInHouse() && test.stateExpected("inHouseOfCommons") && test.houseStateExpected("firstReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("secondReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("committeeConsideration"));
+		assertTrue(test.votePasses() && test.houseStateExpected("thirdReading"));
+		
+		assertTrue(!test.introduceInHouse() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("thirdReading") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest40() {
+		assertTrue(test != null &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInHouse() && test.stateExpected("inHouseOfCommons") && test.houseStateExpected("firstReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("secondReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("committeeConsideration"));
+		assertTrue(test.votePasses() && test.houseStateExpected("thirdReading"));
+		
+		assertTrue(!test.introduceInSenate() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("thirdReading") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest41() {
+		assertTrue(test != null &&
+				test.getIsCommonsBill() &&
+				test.stateExpected("inPreparation") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInHouse() && test.stateExpected("inHouseOfCommons") && test.houseStateExpected("firstReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("secondReading"));
+		assertTrue(test.votePasses() && test.houseStateExpected("committeeConsideration"));
+		assertTrue(test.votePasses() && test.houseStateExpected("thirdReading"));
+		
+		assertTrue(!test.royalAssent() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("inHouseOfCommons") &&
+				test.houseStateExpected("thirdReading") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	
+	@Test
+	public void sneakTest42() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		
+		if (!test.withdraw() ||
+				!test.stateExpected("withdrawn") ||
+				!test.houseStateExpected("Null")) {
+			fail("withdraw failed");
+		}
+		
+		assertTrue(!test.votePasses() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("withdrawn") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest43() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		
+		if (!test.withdraw() ||
+				!test.stateExpected("withdrawn") ||
+				!test.houseStateExpected("Null")) {
+			fail("withdraw failed");
+		}
+		
+		assertTrue(!test.voteFails() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("withdrawn") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest44() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		
+		if (!test.withdraw() ||
+				!test.stateExpected("withdrawn") ||
+				!test.houseStateExpected("Null")) {
+			fail("withdraw failed");
+		}
+		
+		assertTrue(!test.withdraw() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("withdrawn") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest45() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		
+		if (!test.withdraw() ||
+				!test.stateExpected("withdrawn") ||
+				!test.houseStateExpected("Null")) {
+			fail("withdraw failed");
+		}
+		
+		assertTrue(!test.introduceInHouse() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("withdrawn") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest46() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		
+		if (!test.withdraw() ||
+				!test.stateExpected("withdrawn") ||
+				!test.houseStateExpected("Null")) {
+			fail("withdraw failed");
+		}
+		
+		assertTrue(!test.introduceInSenate() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("withdrawn") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void sneakTest47() {
+		if (test == null ||
+				!test.getIsCommonsBill() ||
+				!test.stateExpected("inPreparation") ||
+				!test.houseStateExpected("Null") ||
+				!test.senateStateExpected("Null")) {
+			fail("constructor failed");
+		}
+		if (!test.introduceInHouse() ||
+				!test.stateExpected("inHouseOfCommons") ||
+				!test.houseStateExpected("firstReading")) {
+			fail("introduceInHouse failed");
+		}
+		
+		if (!test.withdraw() ||
+				!test.stateExpected("withdrawn") ||
+				!test.houseStateExpected("Null")) {
+			fail("withdraw failed");
+		}
+		
+		assertTrue(!test.royalAssent() &&
+				test.isIsCommonsBill() &&
+				test.stateExpected("withdrawn") &&
+				test.houseStateExpected("Null") &&
+				test.senateStateExpected("Null"));
 	}
 
 }
