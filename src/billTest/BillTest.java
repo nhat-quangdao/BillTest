@@ -272,8 +272,154 @@ public class BillTest {
 	
 	@Test
 	public void conformanceTest11() {
-		
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && 
+				!test.isIsCommonsBill() && 
+				test.senateStateExpected("firstReadingS"));
+		assertTrue(test.voteFails() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
 	}
 	
+	@Test
+	public void conformanceTest12() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && 
+				!test.isIsCommonsBill() && 
+				test.senateStateExpected("firstReadingS"));
+		assertTrue(test.withdraw() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));	
+	}
+	
+	@Test
+	public void conformanceTest13() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && 
+				!test.isIsCommonsBill() && 
+				test.senateStateExpected("firstReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("secondReadingS"));
+		assertTrue(test.voteFails() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void conformanceTest14() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && 
+				!test.isIsCommonsBill() && 
+				test.senateStateExpected("firstReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("secondReadingS"));
+		assertTrue(test.withdraw() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void conformanceTest15() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && 
+				!test.isIsCommonsBill() && 
+				test.senateStateExpected("firstReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("secondReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("committeeConsiderationS"));
+		assertTrue(test.voteFails() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void conformanceTest16() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && 
+				!test.isIsCommonsBill() && 
+				test.senateStateExpected("firstReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("secondReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("committeeConsiderationS"));
+		assertTrue(test.withdraw() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void conformanceTest17() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && 
+				!test.isIsCommonsBill() && 
+				test.senateStateExpected("firstReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("secondReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("committeeConsiderationS"));
+		assertTrue(test.votePasses() && test.isIsCommonsBill() && test.senateStateExpected("thirdReadingS"));
+		assertTrue(test.voteFails() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void conformanceTest18() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && 
+				!test.isIsCommonsBill() && 
+				test.senateStateExpected("firstReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("secondReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("committeeConsiderationS"));
+		assertTrue(test.votePasses() && test.isIsCommonsBill() && test.senateStateExpected("thirdReadingS"));
+		assertTrue(test.withdraw() && test.stateExpected("withdrawn") && test.senateStateExpected("Null"));
+	}
+	
+	@Test
+	public void conformanceTest19() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && 
+				!test.isIsCommonsBill() && 
+				test.senateStateExpected("firstReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("secondReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("committeeConsiderationS"));
+		assertTrue(test.votePasses() && test.isIsCommonsBill() && test.senateStateExpected("thirdReadingS"));
+		assertTrue(test.votePasses() && test.getIsCommonsBill() && 
+				test.senateStateExpected("Null") && test.stateExpected("awaitingRoyalAssent"));
+		assertTrue(test.royalAssent() && test.stateExpected("actOfParliament"));
+	}
+	
+	@Test
+	public void conformanceTest20() {
+		assertTrue(test != null && 
+				test.isIsCommonsBill() && 
+				test.stateExpected("inPreparation") && 
+				test.houseStateExpected("Null") && 
+				test.senateStateExpected("Null"));
+		assertTrue(test.introduceInSenate() && 
+				!test.isIsCommonsBill() && 
+				test.senateStateExpected("firstReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("secondReadingS"));
+		assertTrue(test.votePasses() && test.senateStateExpected("committeeConsiderationS"));
+		assertTrue(test.votePasses() && test.isIsCommonsBill() && test.senateStateExpected("thirdReadingS"));
+		assertTrue(test.votePasses() && !test.getIsCommonsBill() && 
+				test.senateStateExpected("Null") && test.houseStateExpected("firstReading") && 
+				test.stateExpected("inHouseOfCommons"));
+	}
 
 }
