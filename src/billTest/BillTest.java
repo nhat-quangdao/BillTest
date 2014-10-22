@@ -423,6 +423,10 @@ public class BillTest {
 	}
 	
 	@Test
+<<<<<<< HEAD
+	public void sneakPathTest21() {
+		
+=======
 	public void sneakTest21() {
 		assertTrue(test != null && 
 				test.isIsCommonsBill() && 
@@ -504,6 +508,7 @@ public class BillTest {
 				test.stateExpected("inPreparation") &&
 				test.houseStateExpected("Null") && 
 				test.senateStateExpected("Null"));
+>>>>>>> 57583b0dfde2465f39d78f127e43964200c7dd39
 	}
 
 }
