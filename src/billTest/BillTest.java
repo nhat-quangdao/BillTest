@@ -493,7 +493,7 @@ public class BillTest {
 	}
 	
 	@Test
-	public void sneakTest25() {
+	public void sneakTest26() {
 		assertTrue(test != null && 
 				test.isIsCommonsBill() && 
 				test.stateExpected("inPreparation") && 
