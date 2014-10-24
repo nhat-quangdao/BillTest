@@ -1,0 +1,2014 @@
+<?xml version="1.0" encoding="UTF-8"?><TestSessionContainer xmlns="http://www.codecover.org/xml/testsession-container" Date="1414118101209" TestSessionContainerId="ddc293e4-99f6-4600-809a-84e84a0c2f0e" version="1.0">
+<SrcFileList>
+<SrcFile Content="package bill;&#13;&#10;&#13;&#10;/**&#13;&#10; * State machine of a bill in Canadian parliament&#13;&#10; */&#13;&#10;public class Bill&#13;&#10;{&#13;&#10;&#13;&#10;  //------------------------&#13;&#10;  // MEMBER VARIABLES&#13;&#10;  //------------------------&#13;&#10;&#13;&#10;  //Bill Attributes&#13;&#10;  private boolean isCommonsBill;&#13;&#10;&#13;&#10;  //Bill State Machines&#13;&#10;  enum BillState { inPreparation, inHouseOfCommons, inSenate, awaitingRoyalAssent, actOfParliament, withdrawn }&#13;&#10;  enum BillStateInHouseOfCommons { Null, firstReading, secondReading, committeeConsideration, thirdReading, lastReading }&#13;&#10;  enum BillStateInSenate { Null, firstReadingS, secondReadingS, committeeConsiderationS, thirdReadingS }&#13;&#10;  private BillState billState;&#13;&#10;  private BillStateInHouseOfCommons billStateInHouseOfCommons;&#13;&#10;  private BillStateInSenate billStateInSenate;&#13;&#10;&#13;&#10;  //------------------------&#13;&#10;  // CONSTRUCTOR&#13;&#10;  //------------------------&#13;&#10;&#13;&#10;  public Bill()&#13;&#10;  {&#13;&#10;    isCommonsBill = true;&#13;&#10;    setBillStateInHouseOfCommons(BillStateInHouseOfCommons.Null);&#13;&#10;    setBillStateInSenate(BillStateInSenate.Null);&#13;&#10;    setBillState(BillState.inPreparation);&#13;&#10;  }&#13;&#10;&#13;&#10;  //------------------------&#13;&#10;  // INTERFACE&#13;&#10;  //------------------------&#13;&#10;&#13;&#10;  public boolean setIsCommonsBill(boolean aIsCommonsBill)&#13;&#10;  {&#13;&#10;    boolean wasSet = false;&#13;&#10;    isCommonsBill = aIsCommonsBill;&#13;&#10;    wasSet = true;&#13;&#10;    return wasSet;&#13;&#10;  }&#13;&#10;&#13;&#10;  public boolean getIsCommonsBill()&#13;&#10;  {&#13;&#10;    return isCommonsBill;&#13;&#10;  }&#13;&#10;&#13;&#10;  public boolean isIsCommonsBill()&#13;&#10;  {&#13;&#10;    return isCommonsBill;&#13;&#10;  }&#13;&#10;&#13;&#10;  public boolean introduceInHouse()&#13;&#10;  {&#13;&#10;    boolean wasEventProcessed = false;&#13;&#10;    &#13;&#10;    BillState aBillState = billState;&#13;&#10;    switch (aBillState)&#13;&#10;    {&#13;&#10;      case inPreparation:&#13;&#10;        setBillState(BillState.inHouseOfCommons);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      default:&#13;&#10;        // Other states do respond to this event&#13;&#10;    }&#13;&#10;&#13;&#10;    return wasEventProcessed;&#13;&#10;  }&#13;&#10;&#13;&#10;  public boolean introduceInSenate()&#13;&#10;  {&#13;&#10;    boolean wasEventProcessed = false;&#13;&#10;    &#13;&#10;    BillState aBillState = billState;&#13;&#10;    switch (aBillState)&#13;&#10;    {&#13;&#10;      case inPreparation:&#13;&#10;        isCommonsBill = false;&#13;&#10;        setBillState(BillState.inSenate);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      default:&#13;&#10;        // Other states do respond to this event&#13;&#10;    }&#13;&#10;&#13;&#10;    return wasEventProcessed;&#13;&#10;  }&#13;&#10;&#13;&#10;  public boolean withdraw()&#13;&#10;  {&#13;&#10;    boolean wasEventProcessed = false;&#13;&#10;    &#13;&#10;    BillState aBillState = billState;&#13;&#10;    switch (aBillState)&#13;&#10;    {&#13;&#10;      case inHouseOfCommons:&#13;&#10;        exitBillState();&#13;&#10;        setBillState(BillState.withdrawn);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case inSenate:&#13;&#10;        exitBillState();&#13;&#10;        setBillState(BillState.withdrawn);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      default:&#13;&#10;        // Other states do respond to this event&#13;&#10;    }&#13;&#10;&#13;&#10;    return wasEventProcessed;&#13;&#10;  }&#13;&#10;&#13;&#10;  public boolean voteFails()&#13;&#10;  {&#13;&#10;    boolean wasEventProcessed = false;&#13;&#10;    &#13;&#10;    BillState aBillState = billState;&#13;&#10;    switch (aBillState)&#13;&#10;    {&#13;&#10;      case inHouseOfCommons:    &#9;  &#13;&#10;        setBillStateInHouseOfCommons(BillStateInHouseOfCommons.secondReading);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case inSenate:&#13;&#10;        exitBillState();&#13;&#10;        setBillState(BillState.withdrawn);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      default:&#13;&#10;        // Other states do respond to this event&#13;&#10;    }&#13;&#10;&#13;&#10;    return wasEventProcessed;&#13;&#10;  }&#13;&#10;&#13;&#10;  public boolean royalAssent()&#13;&#10;  {&#13;&#10;    boolean wasEventProcessed = false;&#13;&#10;    &#13;&#10;    BillState aBillState = billState;&#13;&#10;    switch (aBillState)&#13;&#10;    {&#13;&#10;      case awaitingRoyalAssent:&#13;&#10;        setBillState(BillState.actOfParliament);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      default:&#13;&#10;        // Other states do respond to this event&#13;&#10;    }&#13;&#10;&#13;&#10;    return wasEventProcessed;&#13;&#10;  }&#13;&#10;&#13;&#10;  public boolean voteDenied()&#13;&#10;  {&#13;&#10;    boolean wasEventProcessed = false;&#13;&#10;    &#13;&#10;    BillState aBillState = billState;&#13;&#10;    switch (aBillState)&#13;&#10;    {&#13;&#10;      case inHouseOfCommons:    &#9;  &#13;&#10;        setBillStateInHouseOfCommons(BillStateInHouseOfCommons.lastReading);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case inSenate:&#13;&#10;        setBillStateInSenate(BillStateInSenate.firstReadingS);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      default:&#13;&#10;        // Other states do respond to this event&#13;&#10;    }&#13;&#10;&#13;&#10;    return wasEventProcessed;&#13;&#10;  }&#13;&#10;  &#13;&#10;  public boolean modify()&#13;&#10;  {&#13;&#10;    boolean wasEventProcessed = false;&#13;&#10;    &#13;&#10;    BillState aBillState = billState;&#13;&#10;    switch (aBillState)&#13;&#10;    {&#13;&#10;      case withdrawn:&#13;&#10;        setBillState(BillState.inPreparation);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      default:&#13;&#10;        // Other states do respond to this event&#13;&#10;    }&#13;&#10;&#13;&#10;    return wasEventProcessed;&#13;&#10;  }&#13;&#10;&#13;&#10;  private boolean exitInHouseOfCommons()&#13;&#10;  {&#13;&#10;    boolean wasEventProcessed = false;&#13;&#10;    &#13;&#10;    BillStateInHouseOfCommons aBillStateInHouseOfCommons = billStateInHouseOfCommons;&#13;&#10;    switch (aBillStateInHouseOfCommons)&#13;&#10;    {&#13;&#10;      case firstReading:&#13;&#10;        setBillStateInHouseOfCommons(BillStateInHouseOfCommons.Null);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case secondReading:&#13;&#10;        setBillStateInHouseOfCommons(BillStateInHouseOfCommons.Null);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case committeeConsideration:&#13;&#10;        setBillStateInHouseOfCommons(BillStateInHouseOfCommons.Null);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case thirdReading:&#13;&#10;        setBillStateInHouseOfCommons(BillStateInHouseOfCommons.Null);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      default:&#13;&#10;        // Other states do respond to this event&#13;&#10;    }&#13;&#10;&#13;&#10;    return wasEventProcessed;&#13;&#10;  }&#13;&#10;&#13;&#10;  public boolean votePasses()&#13;&#10;  {&#13;&#10;    boolean wasEventProcessed = false;&#13;&#10;    &#13;&#10;    BillStateInHouseOfCommons aBillStateInHouseOfCommons = billStateInHouseOfCommons;&#13;&#10;    BillStateInSenate aBillStateInSenate = billStateInSenate;&#13;&#10;    switch (aBillStateInHouseOfCommons)&#13;&#10;    {&#13;&#10;      case firstReading:&#13;&#10;        setBillStateInHouseOfCommons(BillStateInHouseOfCommons.secondReading);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case secondReading:&#13;&#10;        setBillStateInHouseOfCommons(BillStateInHouseOfCommons.committeeConsideration);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case committeeConsideration:&#13;&#10;        setBillStateInHouseOfCommons(BillStateInHouseOfCommons.thirdReading);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case thirdReading:&#13;&#10;        if (getIsCommonsBill())&#13;&#10;        {&#13;&#10;          exitBillState();&#13;&#10;          setBillState(BillState.inSenate);&#13;&#10;          wasEventProcessed = true;&#13;&#10;          break;&#13;&#10;        }&#13;&#10;        if (!getIsCommonsBill())&#13;&#10;        {&#13;&#10;          exitBillState();&#13;&#10;          setBillState(BillState.awaitingRoyalAssent);&#13;&#10;          wasEventProcessed = true;&#13;&#10;          break;&#13;&#10;        }&#13;&#10;        break;&#13;&#10;      default:&#13;&#10;        // Other states do respond to this event&#13;&#10;    }&#13;&#10;&#13;&#10;    switch (aBillStateInSenate)&#13;&#10;    {&#13;&#10;      case firstReadingS:&#13;&#10;        setBillStateInSenate(BillStateInSenate.secondReadingS);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case secondReadingS:&#13;&#10;        setBillStateInSenate(BillStateInSenate.committeeConsiderationS);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case committeeConsiderationS:&#13;&#10;        setBillStateInSenate(BillStateInSenate.thirdReadingS);&#13;&#10;        isCommonsBill = true;&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case thirdReadingS:&#13;&#10;        if (getIsCommonsBill())&#13;&#10;        {&#13;&#10;          exitBillState();&#13;&#10;          setBillState(BillState.awaitingRoyalAssent);&#13;&#10;          wasEventProcessed = true;&#13;&#10;          break;&#13;&#10;        }&#13;&#10;        if (!getIsCommonsBill())&#13;&#10;        {&#13;&#10;          exitBillState();&#13;&#10;          setBillState(BillState.inHouseOfCommons);&#13;&#10;          wasEventProcessed = true;&#13;&#10;          break;&#13;&#10;        }&#13;&#10;        break;&#13;&#10;      default:&#13;&#10;        // Other states do respond to this event&#13;&#10;    }&#13;&#10;&#13;&#10;    return wasEventProcessed;&#13;&#10;  }&#13;&#10;&#13;&#10;  private boolean exitInSenate()&#13;&#10;  {&#13;&#10;    boolean wasEventProcessed = false;&#13;&#10;    &#13;&#10;    BillStateInSenate aBillStateInSenate = billStateInSenate;&#13;&#10;    switch (aBillStateInSenate)&#13;&#10;    {&#13;&#10;      case firstReadingS:&#13;&#10;        setBillStateInSenate(BillStateInSenate.Null);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case secondReadingS:&#13;&#10;        setBillStateInSenate(BillStateInSenate.Null);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case committeeConsiderationS:&#13;&#10;        setBillStateInSenate(BillStateInSenate.Null);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      case thirdReadingS:&#13;&#10;        setBillStateInSenate(BillStateInSenate.Null);&#13;&#10;        wasEventProcessed = true;&#13;&#10;        break;&#13;&#10;      default:&#13;&#10;        // Other states do respond to this event&#13;&#10;    }&#13;&#10;&#13;&#10;    return wasEventProcessed;&#13;&#10;  }&#13;&#10;&#13;&#10;  private void exitBillState()&#13;&#10;  {&#13;&#10;    switch(billState)&#13;&#10;    {&#13;&#10;      case inHouseOfCommons:&#13;&#10;        exitInHouseOfCommons();&#13;&#10;        break;&#13;&#10;      case inSenate:&#13;&#10;        exitInSenate();&#13;&#10;        break;&#13;&#10;    }&#13;&#10;  }&#13;&#10;&#13;&#10;  private void setBillState(BillState aBillState)&#13;&#10;  {&#13;&#10;    billState = aBillState;&#13;&#10;&#13;&#10;    // entry actions and do activities&#13;&#10;    switch(billState)&#13;&#10;    {&#13;&#10;      case inHouseOfCommons:&#13;&#10;        if (billStateInHouseOfCommons == BillStateInHouseOfCommons.Null) { setBillStateInHouseOfCommons(BillStateInHouseOfCommons.firstReading); }&#13;&#10;        break;&#13;&#10;      case inSenate:&#13;&#10;        if (billStateInSenate == BillStateInSenate.Null) { setBillStateInSenate(BillStateInSenate.firstReadingS); }&#13;&#10;        break;&#13;&#10;    }&#13;&#10;  }&#13;&#10;&#13;&#10;  private void setBillStateInHouseOfCommons(BillStateInHouseOfCommons aBillStateInHouseOfCommons)&#13;&#10;  {&#13;&#10;    billStateInHouseOfCommons = aBillStateInHouseOfCommons;&#13;&#10;    if (billState != BillState.inHouseOfCommons &amp;&amp; aBillStateInHouseOfCommons != BillStateInHouseOfCommons.Null) { setBillState(BillState.inHouseOfCommons); }&#13;&#10;  }&#13;&#10;&#13;&#10;  private void setBillStateInSenate(BillStateInSenate aBillStateInSenate)&#13;&#10;  {&#13;&#10;    billStateInSenate = aBillStateInSenate;&#13;&#10;    if (billState != BillState.inSenate &amp;&amp; aBillStateInSenate != BillStateInSenate.Null) { setBillState(BillState.inSenate); }&#13;&#10;  }&#13;&#10;&#13;&#10;  public void delete()&#13;&#10;  {}&#13;&#10;&#13;&#10;&#13;&#10;  public String toString()&#13;&#10;  {&#13;&#10;&#9;  String outputString = &quot;&quot;;&#13;&#10;    return super.toString() + &quot;[&quot;+&#13;&#10;            &quot;isCommonsBill&quot; + &quot;:&quot; + getIsCommonsBill()+ &quot;]&quot;&#13;&#10;     + outputString;&#13;&#10;  }&#13;&#10;  &#13;&#10;  //test helper methods&#13;&#10;  public boolean stateExpected(String state) {&#13;&#10;&#9;  return billState == BillState.valueOf(state);&#13;&#10;  }&#13;&#10;  &#13;&#10;  public boolean houseStateExpected(String state) {&#13;&#10;&#9;  return billStateInHouseOfCommons == BillStateInHouseOfCommons.valueOf(state);&#13;&#10;  }&#13;&#10;  &#13;&#10;  public boolean senateStateExpected(String state) {&#13;&#10;&#9;  return billStateInSenate == BillStateInSenate.valueOf(state);&#13;&#10;  }&#13;&#10;  &#13;&#10;  &#13;&#10;}" Filename="Bill.java" Intrnl_Id="1"/>
+</SrcFileList>
+<CritList>
+<CritListEntry Name="org.codecover.model.utils.criteria.BranchCoverage" PluginName="org.codecover"/>
+<CritListEntry Name="org.codecover.model.utils.criteria.StatementCoverage" PluginName="org.codecover"/>
+</CritList>
+<BoolOpList/>
+<HierarchyLvlTypeList>
+<HierarchyLvlType EnglishName="enumeration" IntrnlName="enum" Intrnl_Id="2"/>
+<HierarchyLvlType EnglishName="package" IntrnlName="package" Intrnl_Id="3"/>
+<HierarchyLvlType EnglishName="class" IntrnlName="class" Intrnl_Id="4"/>
+<HierarchyLvlType EnglishName="method" IntrnlName="method" Intrnl_Id="5"/>
+<HierarchyLvlType EnglishName="default package" IntrnlName="default package" Intrnl_Id="6"/>
+</HierarchyLvlTypeList>
+<MASTRoot>
+<HierarchyLvl HierarchyLvlId="29" HierarchyLvlTypeId="6" Intrnl_Id="7" Name="default package">
+<Header/>
+<LocList/>
+<HierarchyLvl HierarchyLvlId="28" HierarchyLvlTypeId="3" Intrnl_Id="8" Name="bill">
+<Header/>
+<LocList/>
+<HierarchyLvl HierarchyLvlId="27" HierarchyLvlTypeId="4" Intrnl_Id="9" Name="Bill">
+<Header>
+<Loc EndOffset="95" SrcFileId="1" StartOffset="78"/>
+</Header>
+<LocList>
+<Loc EndOffset="271" SrcFileId="1" StartOffset="78"/>
+<Loc EndOffset="384" SrcFileId="1" StartOffset="380"/>
+<Loc EndOffset="507" SrcFileId="1" StartOffset="503"/>
+<Loc EndOffset="10862" SrcFileId="1" StartOffset="609"/>
+</LocList>
+<HierarchyLvl HierarchyLvlId="1" HierarchyLvlTypeId="2" Intrnl_Id="10" Name="BillState">
+<Header>
+<Loc EndOffset="285" SrcFileId="1" StartOffset="271"/>
+</Header>
+<LocList>
+<Loc EndOffset="380" SrcFileId="1" StartOffset="271"/>
+</LocList>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="2" HierarchyLvlTypeId="2" Intrnl_Id="11" Name="BillStateInHouseOfCommons">
+<Header>
+<Loc EndOffset="414" SrcFileId="1" StartOffset="384"/>
+</Header>
+<LocList>
+<Loc EndOffset="503" SrcFileId="1" StartOffset="384"/>
+</LocList>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="3" HierarchyLvlTypeId="2" Intrnl_Id="12" Name="BillStateInSenate">
+<Header>
+<Loc EndOffset="529" SrcFileId="1" StartOffset="507"/>
+</Header>
+<LocList>
+<Loc EndOffset="609" SrcFileId="1" StartOffset="507"/>
+</LocList>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="4" HierarchyLvlTypeId="5" Intrnl_Id="13" Name="Bill">
+<Header>
+<Loc EndOffset="852" SrcFileId="1" StartOffset="839"/>
+</Header>
+<LocList>
+<Loc EndOffset="1051" SrcFileId="1" StartOffset="839"/>
+</LocList>
+<StmntSeq Intrnl_Id="14">
+<LocList>
+<Loc EndOffset="884" SrcFileId="1" StartOffset="863"/>
+<Loc EndOffset="951" SrcFileId="1" StartOffset="890"/>
+<Loc EndOffset="1002" SrcFileId="1" StartOffset="957"/>
+<Loc EndOffset="1046" SrcFileId="1" StartOffset="1008"/>
+</LocList>
+<BasicStmnt CovItemId="S1" CovItemPrefix="bill.Bill.java" Intrnl_Id="15">
+<LocList>
+<Loc EndOffset="884" SrcFileId="1" StartOffset="863"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S2" CovItemPrefix="bill.Bill.java" Intrnl_Id="16">
+<LocList>
+<Loc EndOffset="951" SrcFileId="1" StartOffset="890"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S3" CovItemPrefix="bill.Bill.java" Intrnl_Id="17">
+<LocList>
+<Loc EndOffset="1002" SrcFileId="1" StartOffset="957"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S4" CovItemPrefix="bill.Bill.java" Intrnl_Id="18">
+<LocList>
+<Loc EndOffset="1046" SrcFileId="1" StartOffset="1008"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="5" HierarchyLvlTypeId="5" Intrnl_Id="19" Name="setIsCommonsBill">
+<Header>
+<Loc EndOffset="1190" SrcFileId="1" StartOffset="1135"/>
+</Header>
+<LocList>
+<Loc EndOffset="1306" SrcFileId="1" StartOffset="1135"/>
+</LocList>
+<StmntSeq Intrnl_Id="20">
+<LocList>
+<Loc EndOffset="1224" SrcFileId="1" StartOffset="1201"/>
+<Loc EndOffset="1261" SrcFileId="1" StartOffset="1230"/>
+<Loc EndOffset="1281" SrcFileId="1" StartOffset="1267"/>
+<Loc EndOffset="1301" SrcFileId="1" StartOffset="1287"/>
+</LocList>
+<BasicStmnt CovItemId="S5" CovItemPrefix="bill.Bill.java" Intrnl_Id="21">
+<LocList>
+<Loc EndOffset="1224" SrcFileId="1" StartOffset="1201"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S6" CovItemPrefix="bill.Bill.java" Intrnl_Id="22">
+<LocList>
+<Loc EndOffset="1261" SrcFileId="1" StartOffset="1230"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S7" CovItemPrefix="bill.Bill.java" Intrnl_Id="23">
+<LocList>
+<Loc EndOffset="1281" SrcFileId="1" StartOffset="1267"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S8" CovItemPrefix="bill.Bill.java" Intrnl_Id="24">
+<LocList>
+<Loc EndOffset="1301" SrcFileId="1" StartOffset="1287"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="6" HierarchyLvlTypeId="5" Intrnl_Id="25" Name="getIsCommonsBill">
+<Header>
+<Loc EndOffset="1345" SrcFileId="1" StartOffset="1312"/>
+</Header>
+<LocList>
+<Loc EndOffset="1382" SrcFileId="1" StartOffset="1312"/>
+</LocList>
+<StmntSeq Intrnl_Id="26">
+<LocList>
+<Loc EndOffset="1377" SrcFileId="1" StartOffset="1356"/>
+</LocList>
+<BasicStmnt CovItemId="S9" CovItemPrefix="bill.Bill.java" Intrnl_Id="27">
+<LocList>
+<Loc EndOffset="1377" SrcFileId="1" StartOffset="1356"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="7" HierarchyLvlTypeId="5" Intrnl_Id="28" Name="isIsCommonsBill">
+<Header>
+<Loc EndOffset="1420" SrcFileId="1" StartOffset="1388"/>
+</Header>
+<LocList>
+<Loc EndOffset="1457" SrcFileId="1" StartOffset="1388"/>
+</LocList>
+<StmntSeq Intrnl_Id="29">
+<LocList>
+<Loc EndOffset="1452" SrcFileId="1" StartOffset="1431"/>
+</LocList>
+<BasicStmnt CovItemId="S10" CovItemPrefix="bill.Bill.java" Intrnl_Id="30">
+<LocList>
+<Loc EndOffset="1452" SrcFileId="1" StartOffset="1431"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="8" HierarchyLvlTypeId="5" Intrnl_Id="31" Name="introduceInHouse">
+<Header>
+<Loc EndOffset="1496" SrcFileId="1" StartOffset="1463"/>
+</Header>
+<LocList>
+<Loc EndOffset="1858" SrcFileId="1" StartOffset="1463"/>
+</LocList>
+<StmntSeq Intrnl_Id="32">
+<LocList>
+<Loc EndOffset="1541" SrcFileId="1" StartOffset="1507"/>
+<Loc EndOffset="1586" SrcFileId="1" StartOffset="1553"/>
+<Loc EndOffset="1820" SrcFileId="1" StartOffset="1592"/>
+<Loc EndOffset="1853" SrcFileId="1" StartOffset="1828"/>
+</LocList>
+<BasicStmnt CovItemId="S11" CovItemPrefix="bill.Bill.java" Intrnl_Id="33">
+<LocList>
+<Loc EndOffset="1541" SrcFileId="1" StartOffset="1507"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S12" CovItemPrefix="bill.Bill.java" Intrnl_Id="34">
+<LocList>
+<Loc EndOffset="1586" SrcFileId="1" StartOffset="1553"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S13" CovItemPrefix="bill.Bill.java" Intrnl_Id="35">
+<Branch CovItemId="B1" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="36">
+<Cond>
+<Loc EndOffset="1644" SrcFileId="1" StartOffset="1626"/>
+</Cond>
+<LocList>
+<Loc EndOffset="1747" SrcFileId="1" StartOffset="1655"/>
+</LocList>
+<StmntSeq Intrnl_Id="37">
+<LocList>
+<Loc EndOffset="1696" SrcFileId="1" StartOffset="1655"/>
+<Loc EndOffset="1731" SrcFileId="1" StartOffset="1706"/>
+<Loc EndOffset="1747" SrcFileId="1" StartOffset="1741"/>
+</LocList>
+<BasicStmnt CovItemId="S14" CovItemPrefix="bill.Bill.java" Intrnl_Id="38">
+<LocList>
+<Loc EndOffset="1696" SrcFileId="1" StartOffset="1655"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S15" CovItemPrefix="bill.Bill.java" Intrnl_Id="39">
+<LocList>
+<Loc EndOffset="1731" SrcFileId="1" StartOffset="1706"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S16" CovItemPrefix="bill.Bill.java" Intrnl_Id="40">
+<LocList>
+<Loc EndOffset="1747" SrcFileId="1" StartOffset="1741"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B2" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="41">
+<Cond>
+<Loc EndOffset="1762" SrcFileId="1" StartOffset="1755"/>
+</Cond>
+<LocList/>
+<StmntSeq Intrnl_Id="42">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="1598" SrcFileId="1" StartOffset="1592"/>
+<LocList>
+<Loc EndOffset="1820" SrcFileId="1" StartOffset="1592"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S17" CovItemPrefix="bill.Bill.java" Intrnl_Id="43">
+<LocList>
+<Loc EndOffset="1853" SrcFileId="1" StartOffset="1828"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="9" HierarchyLvlTypeId="5" Intrnl_Id="44" Name="introduceInSenate">
+<Header>
+<Loc EndOffset="1898" SrcFileId="1" StartOffset="1864"/>
+</Header>
+<LocList>
+<Loc EndOffset="2284" SrcFileId="1" StartOffset="1864"/>
+</LocList>
+<StmntSeq Intrnl_Id="45">
+<LocList>
+<Loc EndOffset="1943" SrcFileId="1" StartOffset="1909"/>
+<Loc EndOffset="1988" SrcFileId="1" StartOffset="1955"/>
+<Loc EndOffset="2246" SrcFileId="1" StartOffset="1994"/>
+<Loc EndOffset="2279" SrcFileId="1" StartOffset="2254"/>
+</LocList>
+<BasicStmnt CovItemId="S18" CovItemPrefix="bill.Bill.java" Intrnl_Id="46">
+<LocList>
+<Loc EndOffset="1943" SrcFileId="1" StartOffset="1909"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S19" CovItemPrefix="bill.Bill.java" Intrnl_Id="47">
+<LocList>
+<Loc EndOffset="1988" SrcFileId="1" StartOffset="1955"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S20" CovItemPrefix="bill.Bill.java" Intrnl_Id="48">
+<Branch CovItemId="B3" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="49">
+<Cond>
+<Loc EndOffset="2046" SrcFileId="1" StartOffset="2028"/>
+</Cond>
+<LocList>
+<Loc EndOffset="2173" SrcFileId="1" StartOffset="2057"/>
+</LocList>
+<StmntSeq Intrnl_Id="50">
+<LocList>
+<Loc EndOffset="2079" SrcFileId="1" StartOffset="2057"/>
+<Loc EndOffset="2122" SrcFileId="1" StartOffset="2089"/>
+<Loc EndOffset="2157" SrcFileId="1" StartOffset="2132"/>
+<Loc EndOffset="2173" SrcFileId="1" StartOffset="2167"/>
+</LocList>
+<BasicStmnt CovItemId="S21" CovItemPrefix="bill.Bill.java" Intrnl_Id="51">
+<LocList>
+<Loc EndOffset="2079" SrcFileId="1" StartOffset="2057"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S22" CovItemPrefix="bill.Bill.java" Intrnl_Id="52">
+<LocList>
+<Loc EndOffset="2122" SrcFileId="1" StartOffset="2089"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S23" CovItemPrefix="bill.Bill.java" Intrnl_Id="53">
+<LocList>
+<Loc EndOffset="2157" SrcFileId="1" StartOffset="2132"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S24" CovItemPrefix="bill.Bill.java" Intrnl_Id="54">
+<LocList>
+<Loc EndOffset="2173" SrcFileId="1" StartOffset="2167"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B4" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="55">
+<Cond>
+<Loc EndOffset="2188" SrcFileId="1" StartOffset="2181"/>
+</Cond>
+<LocList/>
+<StmntSeq Intrnl_Id="56">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="2000" SrcFileId="1" StartOffset="1994"/>
+<LocList>
+<Loc EndOffset="2246" SrcFileId="1" StartOffset="1994"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S25" CovItemPrefix="bill.Bill.java" Intrnl_Id="57">
+<LocList>
+<Loc EndOffset="2279" SrcFileId="1" StartOffset="2254"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="10" HierarchyLvlTypeId="5" Intrnl_Id="58" Name="withdraw">
+<Header>
+<Loc EndOffset="2315" SrcFileId="1" StartOffset="2290"/>
+</Header>
+<LocList>
+<Loc EndOffset="2842" SrcFileId="1" StartOffset="2290"/>
+</LocList>
+<StmntSeq Intrnl_Id="59">
+<LocList>
+<Loc EndOffset="2360" SrcFileId="1" StartOffset="2326"/>
+<Loc EndOffset="2405" SrcFileId="1" StartOffset="2372"/>
+<Loc EndOffset="2804" SrcFileId="1" StartOffset="2411"/>
+<Loc EndOffset="2837" SrcFileId="1" StartOffset="2812"/>
+</LocList>
+<BasicStmnt CovItemId="S26" CovItemPrefix="bill.Bill.java" Intrnl_Id="60">
+<LocList>
+<Loc EndOffset="2360" SrcFileId="1" StartOffset="2326"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S27" CovItemPrefix="bill.Bill.java" Intrnl_Id="61">
+<LocList>
+<Loc EndOffset="2405" SrcFileId="1" StartOffset="2372"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S28" CovItemPrefix="bill.Bill.java" Intrnl_Id="62">
+<Branch CovItemId="B5" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="63">
+<Cond>
+<Loc EndOffset="2466" SrcFileId="1" StartOffset="2445"/>
+</Cond>
+<LocList>
+<Loc EndOffset="2588" SrcFileId="1" StartOffset="2477"/>
+</LocList>
+<StmntSeq Intrnl_Id="64">
+<LocList>
+<Loc EndOffset="2493" SrcFileId="1" StartOffset="2477"/>
+<Loc EndOffset="2537" SrcFileId="1" StartOffset="2503"/>
+<Loc EndOffset="2572" SrcFileId="1" StartOffset="2547"/>
+<Loc EndOffset="2588" SrcFileId="1" StartOffset="2582"/>
+</LocList>
+<BasicStmnt CovItemId="S29" CovItemPrefix="bill.Bill.java" Intrnl_Id="65">
+<LocList>
+<Loc EndOffset="2493" SrcFileId="1" StartOffset="2477"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S30" CovItemPrefix="bill.Bill.java" Intrnl_Id="66">
+<LocList>
+<Loc EndOffset="2537" SrcFileId="1" StartOffset="2503"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S31" CovItemPrefix="bill.Bill.java" Intrnl_Id="67">
+<LocList>
+<Loc EndOffset="2572" SrcFileId="1" StartOffset="2547"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S32" CovItemPrefix="bill.Bill.java" Intrnl_Id="68">
+<LocList>
+<Loc EndOffset="2588" SrcFileId="1" StartOffset="2582"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B6" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="69">
+<Cond>
+<Loc EndOffset="2609" SrcFileId="1" StartOffset="2596"/>
+</Cond>
+<LocList>
+<Loc EndOffset="2731" SrcFileId="1" StartOffset="2620"/>
+</LocList>
+<StmntSeq Intrnl_Id="70">
+<LocList>
+<Loc EndOffset="2636" SrcFileId="1" StartOffset="2620"/>
+<Loc EndOffset="2680" SrcFileId="1" StartOffset="2646"/>
+<Loc EndOffset="2715" SrcFileId="1" StartOffset="2690"/>
+<Loc EndOffset="2731" SrcFileId="1" StartOffset="2725"/>
+</LocList>
+<BasicStmnt CovItemId="S33" CovItemPrefix="bill.Bill.java" Intrnl_Id="71">
+<LocList>
+<Loc EndOffset="2636" SrcFileId="1" StartOffset="2620"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S34" CovItemPrefix="bill.Bill.java" Intrnl_Id="72">
+<LocList>
+<Loc EndOffset="2680" SrcFileId="1" StartOffset="2646"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S35" CovItemPrefix="bill.Bill.java" Intrnl_Id="73">
+<LocList>
+<Loc EndOffset="2715" SrcFileId="1" StartOffset="2690"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S36" CovItemPrefix="bill.Bill.java" Intrnl_Id="74">
+<LocList>
+<Loc EndOffset="2731" SrcFileId="1" StartOffset="2725"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B7" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="75">
+<Cond>
+<Loc EndOffset="2746" SrcFileId="1" StartOffset="2739"/>
+</Cond>
+<LocList/>
+<StmntSeq Intrnl_Id="76">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="2417" SrcFileId="1" StartOffset="2411"/>
+<LocList>
+<Loc EndOffset="2804" SrcFileId="1" StartOffset="2411"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S37" CovItemPrefix="bill.Bill.java" Intrnl_Id="77">
+<LocList>
+<Loc EndOffset="2837" SrcFileId="1" StartOffset="2812"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="11" HierarchyLvlTypeId="5" Intrnl_Id="78" Name="voteFails">
+<Header>
+<Loc EndOffset="2874" SrcFileId="1" StartOffset="2848"/>
+</Header>
+<LocList>
+<Loc EndOffset="3418" SrcFileId="1" StartOffset="2848"/>
+</LocList>
+<StmntSeq Intrnl_Id="79">
+<LocList>
+<Loc EndOffset="2919" SrcFileId="1" StartOffset="2885"/>
+<Loc EndOffset="2964" SrcFileId="1" StartOffset="2931"/>
+<Loc EndOffset="3380" SrcFileId="1" StartOffset="2970"/>
+<Loc EndOffset="3413" SrcFileId="1" StartOffset="3388"/>
+</LocList>
+<BasicStmnt CovItemId="S38" CovItemPrefix="bill.Bill.java" Intrnl_Id="80">
+<LocList>
+<Loc EndOffset="2919" SrcFileId="1" StartOffset="2885"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S39" CovItemPrefix="bill.Bill.java" Intrnl_Id="81">
+<LocList>
+<Loc EndOffset="2964" SrcFileId="1" StartOffset="2931"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S40" CovItemPrefix="bill.Bill.java" Intrnl_Id="82">
+<Branch CovItemId="B8" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="83">
+<Cond>
+<Loc EndOffset="3025" SrcFileId="1" StartOffset="3004"/>
+</Cond>
+<LocList>
+<Loc EndOffset="3164" SrcFileId="1" StartOffset="3043"/>
+</LocList>
+<StmntSeq Intrnl_Id="84">
+<LocList>
+<Loc EndOffset="3113" SrcFileId="1" StartOffset="3043"/>
+<Loc EndOffset="3148" SrcFileId="1" StartOffset="3123"/>
+<Loc EndOffset="3164" SrcFileId="1" StartOffset="3158"/>
+</LocList>
+<BasicStmnt CovItemId="S41" CovItemPrefix="bill.Bill.java" Intrnl_Id="85">
+<LocList>
+<Loc EndOffset="3113" SrcFileId="1" StartOffset="3043"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S42" CovItemPrefix="bill.Bill.java" Intrnl_Id="86">
+<LocList>
+<Loc EndOffset="3148" SrcFileId="1" StartOffset="3123"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S43" CovItemPrefix="bill.Bill.java" Intrnl_Id="87">
+<LocList>
+<Loc EndOffset="3164" SrcFileId="1" StartOffset="3158"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B9" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="88">
+<Cond>
+<Loc EndOffset="3185" SrcFileId="1" StartOffset="3172"/>
+</Cond>
+<LocList>
+<Loc EndOffset="3307" SrcFileId="1" StartOffset="3196"/>
+</LocList>
+<StmntSeq Intrnl_Id="89">
+<LocList>
+<Loc EndOffset="3212" SrcFileId="1" StartOffset="3196"/>
+<Loc EndOffset="3256" SrcFileId="1" StartOffset="3222"/>
+<Loc EndOffset="3291" SrcFileId="1" StartOffset="3266"/>
+<Loc EndOffset="3307" SrcFileId="1" StartOffset="3301"/>
+</LocList>
+<BasicStmnt CovItemId="S44" CovItemPrefix="bill.Bill.java" Intrnl_Id="90">
+<LocList>
+<Loc EndOffset="3212" SrcFileId="1" StartOffset="3196"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S45" CovItemPrefix="bill.Bill.java" Intrnl_Id="91">
+<LocList>
+<Loc EndOffset="3256" SrcFileId="1" StartOffset="3222"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S46" CovItemPrefix="bill.Bill.java" Intrnl_Id="92">
+<LocList>
+<Loc EndOffset="3291" SrcFileId="1" StartOffset="3266"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S47" CovItemPrefix="bill.Bill.java" Intrnl_Id="93">
+<LocList>
+<Loc EndOffset="3307" SrcFileId="1" StartOffset="3301"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B10" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="94">
+<Cond>
+<Loc EndOffset="3322" SrcFileId="1" StartOffset="3315"/>
+</Cond>
+<LocList/>
+<StmntSeq Intrnl_Id="95">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="2976" SrcFileId="1" StartOffset="2970"/>
+<LocList>
+<Loc EndOffset="3380" SrcFileId="1" StartOffset="2970"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S48" CovItemPrefix="bill.Bill.java" Intrnl_Id="96">
+<LocList>
+<Loc EndOffset="3413" SrcFileId="1" StartOffset="3388"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="12" HierarchyLvlTypeId="5" Intrnl_Id="97" Name="royalAssent">
+<Header>
+<Loc EndOffset="3452" SrcFileId="1" StartOffset="3424"/>
+</Header>
+<LocList>
+<Loc EndOffset="3819" SrcFileId="1" StartOffset="3424"/>
+</LocList>
+<StmntSeq Intrnl_Id="98">
+<LocList>
+<Loc EndOffset="3497" SrcFileId="1" StartOffset="3463"/>
+<Loc EndOffset="3542" SrcFileId="1" StartOffset="3509"/>
+<Loc EndOffset="3781" SrcFileId="1" StartOffset="3548"/>
+<Loc EndOffset="3814" SrcFileId="1" StartOffset="3789"/>
+</LocList>
+<BasicStmnt CovItemId="S49" CovItemPrefix="bill.Bill.java" Intrnl_Id="99">
+<LocList>
+<Loc EndOffset="3497" SrcFileId="1" StartOffset="3463"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S50" CovItemPrefix="bill.Bill.java" Intrnl_Id="100">
+<LocList>
+<Loc EndOffset="3542" SrcFileId="1" StartOffset="3509"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S51" CovItemPrefix="bill.Bill.java" Intrnl_Id="101">
+<Branch CovItemId="B11" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="102">
+<Cond>
+<Loc EndOffset="3606" SrcFileId="1" StartOffset="3582"/>
+</Cond>
+<LocList>
+<Loc EndOffset="3708" SrcFileId="1" StartOffset="3617"/>
+</LocList>
+<StmntSeq Intrnl_Id="103">
+<LocList>
+<Loc EndOffset="3657" SrcFileId="1" StartOffset="3617"/>
+<Loc EndOffset="3692" SrcFileId="1" StartOffset="3667"/>
+<Loc EndOffset="3708" SrcFileId="1" StartOffset="3702"/>
+</LocList>
+<BasicStmnt CovItemId="S52" CovItemPrefix="bill.Bill.java" Intrnl_Id="104">
+<LocList>
+<Loc EndOffset="3657" SrcFileId="1" StartOffset="3617"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S53" CovItemPrefix="bill.Bill.java" Intrnl_Id="105">
+<LocList>
+<Loc EndOffset="3692" SrcFileId="1" StartOffset="3667"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S54" CovItemPrefix="bill.Bill.java" Intrnl_Id="106">
+<LocList>
+<Loc EndOffset="3708" SrcFileId="1" StartOffset="3702"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B12" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="107">
+<Cond>
+<Loc EndOffset="3723" SrcFileId="1" StartOffset="3716"/>
+</Cond>
+<LocList/>
+<StmntSeq Intrnl_Id="108">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="3554" SrcFileId="1" StartOffset="3548"/>
+<LocList>
+<Loc EndOffset="3781" SrcFileId="1" StartOffset="3548"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S55" CovItemPrefix="bill.Bill.java" Intrnl_Id="109">
+<LocList>
+<Loc EndOffset="3814" SrcFileId="1" StartOffset="3789"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="13" HierarchyLvlTypeId="5" Intrnl_Id="110" Name="voteDenied">
+<Header>
+<Loc EndOffset="3852" SrcFileId="1" StartOffset="3825"/>
+</Header>
+<LocList>
+<Loc EndOffset="4388" SrcFileId="1" StartOffset="3825"/>
+</LocList>
+<StmntSeq Intrnl_Id="111">
+<LocList>
+<Loc EndOffset="3897" SrcFileId="1" StartOffset="3863"/>
+<Loc EndOffset="3942" SrcFileId="1" StartOffset="3909"/>
+<Loc EndOffset="4350" SrcFileId="1" StartOffset="3948"/>
+<Loc EndOffset="4383" SrcFileId="1" StartOffset="4358"/>
+</LocList>
+<BasicStmnt CovItemId="S56" CovItemPrefix="bill.Bill.java" Intrnl_Id="112">
+<LocList>
+<Loc EndOffset="3897" SrcFileId="1" StartOffset="3863"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S57" CovItemPrefix="bill.Bill.java" Intrnl_Id="113">
+<LocList>
+<Loc EndOffset="3942" SrcFileId="1" StartOffset="3909"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S58" CovItemPrefix="bill.Bill.java" Intrnl_Id="114">
+<Branch CovItemId="B13" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="115">
+<Cond>
+<Loc EndOffset="4003" SrcFileId="1" StartOffset="3982"/>
+</Cond>
+<LocList>
+<Loc EndOffset="4140" SrcFileId="1" StartOffset="4021"/>
+</LocList>
+<StmntSeq Intrnl_Id="116">
+<LocList>
+<Loc EndOffset="4089" SrcFileId="1" StartOffset="4021"/>
+<Loc EndOffset="4124" SrcFileId="1" StartOffset="4099"/>
+<Loc EndOffset="4140" SrcFileId="1" StartOffset="4134"/>
+</LocList>
+<BasicStmnt CovItemId="S59" CovItemPrefix="bill.Bill.java" Intrnl_Id="117">
+<LocList>
+<Loc EndOffset="4089" SrcFileId="1" StartOffset="4021"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S60" CovItemPrefix="bill.Bill.java" Intrnl_Id="118">
+<LocList>
+<Loc EndOffset="4124" SrcFileId="1" StartOffset="4099"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S61" CovItemPrefix="bill.Bill.java" Intrnl_Id="119">
+<LocList>
+<Loc EndOffset="4140" SrcFileId="1" StartOffset="4134"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B14" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="120">
+<Cond>
+<Loc EndOffset="4161" SrcFileId="1" StartOffset="4148"/>
+</Cond>
+<LocList>
+<Loc EndOffset="4277" SrcFileId="1" StartOffset="4172"/>
+</LocList>
+<StmntSeq Intrnl_Id="121">
+<LocList>
+<Loc EndOffset="4226" SrcFileId="1" StartOffset="4172"/>
+<Loc EndOffset="4261" SrcFileId="1" StartOffset="4236"/>
+<Loc EndOffset="4277" SrcFileId="1" StartOffset="4271"/>
+</LocList>
+<BasicStmnt CovItemId="S62" CovItemPrefix="bill.Bill.java" Intrnl_Id="122">
+<LocList>
+<Loc EndOffset="4226" SrcFileId="1" StartOffset="4172"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S63" CovItemPrefix="bill.Bill.java" Intrnl_Id="123">
+<LocList>
+<Loc EndOffset="4261" SrcFileId="1" StartOffset="4236"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S64" CovItemPrefix="bill.Bill.java" Intrnl_Id="124">
+<LocList>
+<Loc EndOffset="4277" SrcFileId="1" StartOffset="4271"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B15" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="125">
+<Cond>
+<Loc EndOffset="4292" SrcFileId="1" StartOffset="4285"/>
+</Cond>
+<LocList/>
+<StmntSeq Intrnl_Id="126">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="3954" SrcFileId="1" StartOffset="3948"/>
+<LocList>
+<Loc EndOffset="4350" SrcFileId="1" StartOffset="3948"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S65" CovItemPrefix="bill.Bill.java" Intrnl_Id="127">
+<LocList>
+<Loc EndOffset="4383" SrcFileId="1" StartOffset="4358"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="14" HierarchyLvlTypeId="5" Intrnl_Id="128" Name="modify">
+<Header>
+<Loc EndOffset="4419" SrcFileId="1" StartOffset="4396"/>
+</Header>
+<LocList>
+<Loc EndOffset="4774" SrcFileId="1" StartOffset="4396"/>
+</LocList>
+<StmntSeq Intrnl_Id="129">
+<LocList>
+<Loc EndOffset="4464" SrcFileId="1" StartOffset="4430"/>
+<Loc EndOffset="4509" SrcFileId="1" StartOffset="4476"/>
+<Loc EndOffset="4736" SrcFileId="1" StartOffset="4515"/>
+<Loc EndOffset="4769" SrcFileId="1" StartOffset="4744"/>
+</LocList>
+<BasicStmnt CovItemId="S66" CovItemPrefix="bill.Bill.java" Intrnl_Id="130">
+<LocList>
+<Loc EndOffset="4464" SrcFileId="1" StartOffset="4430"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S67" CovItemPrefix="bill.Bill.java" Intrnl_Id="131">
+<LocList>
+<Loc EndOffset="4509" SrcFileId="1" StartOffset="4476"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S68" CovItemPrefix="bill.Bill.java" Intrnl_Id="132">
+<Branch CovItemId="B16" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="133">
+<Cond>
+<Loc EndOffset="4563" SrcFileId="1" StartOffset="4549"/>
+</Cond>
+<LocList>
+<Loc EndOffset="4663" SrcFileId="1" StartOffset="4574"/>
+</LocList>
+<StmntSeq Intrnl_Id="134">
+<LocList>
+<Loc EndOffset="4612" SrcFileId="1" StartOffset="4574"/>
+<Loc EndOffset="4647" SrcFileId="1" StartOffset="4622"/>
+<Loc EndOffset="4663" SrcFileId="1" StartOffset="4657"/>
+</LocList>
+<BasicStmnt CovItemId="S69" CovItemPrefix="bill.Bill.java" Intrnl_Id="135">
+<LocList>
+<Loc EndOffset="4612" SrcFileId="1" StartOffset="4574"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S70" CovItemPrefix="bill.Bill.java" Intrnl_Id="136">
+<LocList>
+<Loc EndOffset="4647" SrcFileId="1" StartOffset="4622"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S71" CovItemPrefix="bill.Bill.java" Intrnl_Id="137">
+<LocList>
+<Loc EndOffset="4663" SrcFileId="1" StartOffset="4657"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B17" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="138">
+<Cond>
+<Loc EndOffset="4678" SrcFileId="1" StartOffset="4671"/>
+</Cond>
+<LocList/>
+<StmntSeq Intrnl_Id="139">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="4521" SrcFileId="1" StartOffset="4515"/>
+<LocList>
+<Loc EndOffset="4736" SrcFileId="1" StartOffset="4515"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S72" CovItemPrefix="bill.Bill.java" Intrnl_Id="140">
+<LocList>
+<Loc EndOffset="4769" SrcFileId="1" StartOffset="4744"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="15" HierarchyLvlTypeId="5" Intrnl_Id="141" Name="exitInHouseOfCommons">
+<Header>
+<Loc EndOffset="4818" SrcFileId="1" StartOffset="4780"/>
+</Header>
+<LocList>
+<Loc EndOffset="5718" SrcFileId="1" StartOffset="4780"/>
+</LocList>
+<StmntSeq Intrnl_Id="142">
+<LocList>
+<Loc EndOffset="4863" SrcFileId="1" StartOffset="4829"/>
+<Loc EndOffset="4956" SrcFileId="1" StartOffset="4875"/>
+<Loc EndOffset="5680" SrcFileId="1" StartOffset="4962"/>
+<Loc EndOffset="5713" SrcFileId="1" StartOffset="5688"/>
+</LocList>
+<BasicStmnt CovItemId="S73" CovItemPrefix="bill.Bill.java" Intrnl_Id="143">
+<LocList>
+<Loc EndOffset="4863" SrcFileId="1" StartOffset="4829"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S74" CovItemPrefix="bill.Bill.java" Intrnl_Id="144">
+<LocList>
+<Loc EndOffset="4956" SrcFileId="1" StartOffset="4875"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S75" CovItemPrefix="bill.Bill.java" Intrnl_Id="145">
+<Branch CovItemId="B18" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="146">
+<Cond>
+<Loc EndOffset="5029" SrcFileId="1" StartOffset="5012"/>
+</Cond>
+<LocList>
+<Loc EndOffset="5152" SrcFileId="1" StartOffset="5040"/>
+</LocList>
+<StmntSeq Intrnl_Id="147">
+<LocList>
+<Loc EndOffset="5101" SrcFileId="1" StartOffset="5040"/>
+<Loc EndOffset="5136" SrcFileId="1" StartOffset="5111"/>
+<Loc EndOffset="5152" SrcFileId="1" StartOffset="5146"/>
+</LocList>
+<BasicStmnt CovItemId="S76" CovItemPrefix="bill.Bill.java" Intrnl_Id="148">
+<LocList>
+<Loc EndOffset="5101" SrcFileId="1" StartOffset="5040"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S77" CovItemPrefix="bill.Bill.java" Intrnl_Id="149">
+<LocList>
+<Loc EndOffset="5136" SrcFileId="1" StartOffset="5111"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S78" CovItemPrefix="bill.Bill.java" Intrnl_Id="150">
+<LocList>
+<Loc EndOffset="5152" SrcFileId="1" StartOffset="5146"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B19" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="151">
+<Cond>
+<Loc EndOffset="5178" SrcFileId="1" StartOffset="5160"/>
+</Cond>
+<LocList>
+<Loc EndOffset="5301" SrcFileId="1" StartOffset="5189"/>
+</LocList>
+<StmntSeq Intrnl_Id="152">
+<LocList>
+<Loc EndOffset="5250" SrcFileId="1" StartOffset="5189"/>
+<Loc EndOffset="5285" SrcFileId="1" StartOffset="5260"/>
+<Loc EndOffset="5301" SrcFileId="1" StartOffset="5295"/>
+</LocList>
+<BasicStmnt CovItemId="S79" CovItemPrefix="bill.Bill.java" Intrnl_Id="153">
+<LocList>
+<Loc EndOffset="5250" SrcFileId="1" StartOffset="5189"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S80" CovItemPrefix="bill.Bill.java" Intrnl_Id="154">
+<LocList>
+<Loc EndOffset="5285" SrcFileId="1" StartOffset="5260"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S81" CovItemPrefix="bill.Bill.java" Intrnl_Id="155">
+<LocList>
+<Loc EndOffset="5301" SrcFileId="1" StartOffset="5295"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B20" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="156">
+<Cond>
+<Loc EndOffset="5336" SrcFileId="1" StartOffset="5309"/>
+</Cond>
+<LocList>
+<Loc EndOffset="5459" SrcFileId="1" StartOffset="5347"/>
+</LocList>
+<StmntSeq Intrnl_Id="157">
+<LocList>
+<Loc EndOffset="5408" SrcFileId="1" StartOffset="5347"/>
+<Loc EndOffset="5443" SrcFileId="1" StartOffset="5418"/>
+<Loc EndOffset="5459" SrcFileId="1" StartOffset="5453"/>
+</LocList>
+<BasicStmnt CovItemId="S82" CovItemPrefix="bill.Bill.java" Intrnl_Id="158">
+<LocList>
+<Loc EndOffset="5408" SrcFileId="1" StartOffset="5347"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S83" CovItemPrefix="bill.Bill.java" Intrnl_Id="159">
+<LocList>
+<Loc EndOffset="5443" SrcFileId="1" StartOffset="5418"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S84" CovItemPrefix="bill.Bill.java" Intrnl_Id="160">
+<LocList>
+<Loc EndOffset="5459" SrcFileId="1" StartOffset="5453"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B21" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="161">
+<Cond>
+<Loc EndOffset="5484" SrcFileId="1" StartOffset="5467"/>
+</Cond>
+<LocList>
+<Loc EndOffset="5607" SrcFileId="1" StartOffset="5495"/>
+</LocList>
+<StmntSeq Intrnl_Id="162">
+<LocList>
+<Loc EndOffset="5556" SrcFileId="1" StartOffset="5495"/>
+<Loc EndOffset="5591" SrcFileId="1" StartOffset="5566"/>
+<Loc EndOffset="5607" SrcFileId="1" StartOffset="5601"/>
+</LocList>
+<BasicStmnt CovItemId="S85" CovItemPrefix="bill.Bill.java" Intrnl_Id="163">
+<LocList>
+<Loc EndOffset="5556" SrcFileId="1" StartOffset="5495"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S86" CovItemPrefix="bill.Bill.java" Intrnl_Id="164">
+<LocList>
+<Loc EndOffset="5591" SrcFileId="1" StartOffset="5566"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S87" CovItemPrefix="bill.Bill.java" Intrnl_Id="165">
+<LocList>
+<Loc EndOffset="5607" SrcFileId="1" StartOffset="5601"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B22" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="166">
+<Cond>
+<Loc EndOffset="5622" SrcFileId="1" StartOffset="5615"/>
+</Cond>
+<LocList/>
+<StmntSeq Intrnl_Id="167">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="4968" SrcFileId="1" StartOffset="4962"/>
+<LocList>
+<Loc EndOffset="5680" SrcFileId="1" StartOffset="4962"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S88" CovItemPrefix="bill.Bill.java" Intrnl_Id="168">
+<LocList>
+<Loc EndOffset="5713" SrcFileId="1" StartOffset="5688"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="16" HierarchyLvlTypeId="5" Intrnl_Id="169" Name="votePasses">
+<Header>
+<Loc EndOffset="5751" SrcFileId="1" StartOffset="5724"/>
+</Header>
+<LocList>
+<Loc EndOffset="8044" SrcFileId="1" StartOffset="5724"/>
+</LocList>
+<StmntSeq Intrnl_Id="170">
+<LocList>
+<Loc EndOffset="5796" SrcFileId="1" StartOffset="5762"/>
+<Loc EndOffset="5889" SrcFileId="1" StartOffset="5808"/>
+<Loc EndOffset="5952" SrcFileId="1" StartOffset="5895"/>
+<Loc EndOffset="6983" SrcFileId="1" StartOffset="5958"/>
+<Loc EndOffset="8006" SrcFileId="1" StartOffset="6991"/>
+<Loc EndOffset="8039" SrcFileId="1" StartOffset="8014"/>
+</LocList>
+<BasicStmnt CovItemId="S89" CovItemPrefix="bill.Bill.java" Intrnl_Id="171">
+<LocList>
+<Loc EndOffset="5796" SrcFileId="1" StartOffset="5762"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S90" CovItemPrefix="bill.Bill.java" Intrnl_Id="172">
+<LocList>
+<Loc EndOffset="5889" SrcFileId="1" StartOffset="5808"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S91" CovItemPrefix="bill.Bill.java" Intrnl_Id="173">
+<LocList>
+<Loc EndOffset="5952" SrcFileId="1" StartOffset="5895"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S92" CovItemPrefix="bill.Bill.java" Intrnl_Id="174">
+<Branch CovItemId="B23" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="175">
+<Cond>
+<Loc EndOffset="6025" SrcFileId="1" StartOffset="6008"/>
+</Cond>
+<LocList>
+<Loc EndOffset="6157" SrcFileId="1" StartOffset="6036"/>
+</LocList>
+<StmntSeq Intrnl_Id="176">
+<LocList>
+<Loc EndOffset="6106" SrcFileId="1" StartOffset="6036"/>
+<Loc EndOffset="6141" SrcFileId="1" StartOffset="6116"/>
+<Loc EndOffset="6157" SrcFileId="1" StartOffset="6151"/>
+</LocList>
+<BasicStmnt CovItemId="S93" CovItemPrefix="bill.Bill.java" Intrnl_Id="177">
+<LocList>
+<Loc EndOffset="6106" SrcFileId="1" StartOffset="6036"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S94" CovItemPrefix="bill.Bill.java" Intrnl_Id="178">
+<LocList>
+<Loc EndOffset="6141" SrcFileId="1" StartOffset="6116"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S95" CovItemPrefix="bill.Bill.java" Intrnl_Id="179">
+<LocList>
+<Loc EndOffset="6157" SrcFileId="1" StartOffset="6151"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B24" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="180">
+<Cond>
+<Loc EndOffset="6183" SrcFileId="1" StartOffset="6165"/>
+</Cond>
+<LocList>
+<Loc EndOffset="6324" SrcFileId="1" StartOffset="6194"/>
+</LocList>
+<StmntSeq Intrnl_Id="181">
+<LocList>
+<Loc EndOffset="6273" SrcFileId="1" StartOffset="6194"/>
+<Loc EndOffset="6308" SrcFileId="1" StartOffset="6283"/>
+<Loc EndOffset="6324" SrcFileId="1" StartOffset="6318"/>
+</LocList>
+<BasicStmnt CovItemId="S96" CovItemPrefix="bill.Bill.java" Intrnl_Id="182">
+<LocList>
+<Loc EndOffset="6273" SrcFileId="1" StartOffset="6194"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S97" CovItemPrefix="bill.Bill.java" Intrnl_Id="183">
+<LocList>
+<Loc EndOffset="6308" SrcFileId="1" StartOffset="6283"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S98" CovItemPrefix="bill.Bill.java" Intrnl_Id="184">
+<LocList>
+<Loc EndOffset="6324" SrcFileId="1" StartOffset="6318"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B25" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="185">
+<Cond>
+<Loc EndOffset="6359" SrcFileId="1" StartOffset="6332"/>
+</Cond>
+<LocList>
+<Loc EndOffset="6490" SrcFileId="1" StartOffset="6370"/>
+</LocList>
+<StmntSeq Intrnl_Id="186">
+<LocList>
+<Loc EndOffset="6439" SrcFileId="1" StartOffset="6370"/>
+<Loc EndOffset="6474" SrcFileId="1" StartOffset="6449"/>
+<Loc EndOffset="6490" SrcFileId="1" StartOffset="6484"/>
+</LocList>
+<BasicStmnt CovItemId="S99" CovItemPrefix="bill.Bill.java" Intrnl_Id="187">
+<LocList>
+<Loc EndOffset="6439" SrcFileId="1" StartOffset="6370"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S100" CovItemPrefix="bill.Bill.java" Intrnl_Id="188">
+<LocList>
+<Loc EndOffset="6474" SrcFileId="1" StartOffset="6449"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S101" CovItemPrefix="bill.Bill.java" Intrnl_Id="189">
+<LocList>
+<Loc EndOffset="6490" SrcFileId="1" StartOffset="6484"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B26" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="190">
+<Cond>
+<Loc EndOffset="6515" SrcFileId="1" StartOffset="6498"/>
+</Cond>
+<LocList>
+<Loc EndOffset="6910" SrcFileId="1" StartOffset="6526"/>
+</LocList>
+<StmntSeq Intrnl_Id="191">
+<LocList>
+<Loc EndOffset="6699" SrcFileId="1" StartOffset="6526"/>
+<Loc EndOffset="6894" SrcFileId="1" StartOffset="6709"/>
+<Loc EndOffset="6910" SrcFileId="1" StartOffset="6904"/>
+</LocList>
+<CondStmnt CovItemId="S102" CovItemPrefix="bill.Bill.java" Intrnl_Id="192">
+<Branch CovItemId="B27" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="193">
+<Cond/>
+<LocList>
+<Loc EndOffset="6699" SrcFileId="1" StartOffset="6559"/>
+</LocList>
+<StmntSeq Intrnl_Id="194">
+<LocList>
+<Loc EndOffset="6588" SrcFileId="1" StartOffset="6572"/>
+<Loc EndOffset="6633" SrcFileId="1" StartOffset="6600"/>
+<Loc EndOffset="6670" SrcFileId="1" StartOffset="6645"/>
+<Loc EndOffset="6688" SrcFileId="1" StartOffset="6682"/>
+</LocList>
+<BasicStmnt CovItemId="S103" CovItemPrefix="bill.Bill.java" Intrnl_Id="195">
+<LocList>
+<Loc EndOffset="6588" SrcFileId="1" StartOffset="6572"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S104" CovItemPrefix="bill.Bill.java" Intrnl_Id="196">
+<LocList>
+<Loc EndOffset="6633" SrcFileId="1" StartOffset="6600"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S105" CovItemPrefix="bill.Bill.java" Intrnl_Id="197">
+<LocList>
+<Loc EndOffset="6670" SrcFileId="1" StartOffset="6645"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S106" CovItemPrefix="bill.Bill.java" Intrnl_Id="198">
+<LocList>
+<Loc EndOffset="6688" SrcFileId="1" StartOffset="6682"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B28" CovItemPrefix="bill.Bill.java" Implct="true" Intrnl_Id="199">
+<Cond/>
+<LocList/>
+<StmntSeq Intrnl_Id="200">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="6528" SrcFileId="1" StartOffset="6526"/>
+<LocList>
+<Loc EndOffset="6699" SrcFileId="1" StartOffset="6526"/>
+</LocList>
+</CondStmnt>
+<CondStmnt CovItemId="S107" CovItemPrefix="bill.Bill.java" Intrnl_Id="201">
+<Branch CovItemId="B29" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="202">
+<Cond/>
+<LocList>
+<Loc EndOffset="6894" SrcFileId="1" StartOffset="6743"/>
+</LocList>
+<StmntSeq Intrnl_Id="203">
+<LocList>
+<Loc EndOffset="6772" SrcFileId="1" StartOffset="6756"/>
+<Loc EndOffset="6828" SrcFileId="1" StartOffset="6784"/>
+<Loc EndOffset="6865" SrcFileId="1" StartOffset="6840"/>
+<Loc EndOffset="6883" SrcFileId="1" StartOffset="6877"/>
+</LocList>
+<BasicStmnt CovItemId="S108" CovItemPrefix="bill.Bill.java" Intrnl_Id="204">
+<LocList>
+<Loc EndOffset="6772" SrcFileId="1" StartOffset="6756"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S109" CovItemPrefix="bill.Bill.java" Intrnl_Id="205">
+<LocList>
+<Loc EndOffset="6828" SrcFileId="1" StartOffset="6784"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S110" CovItemPrefix="bill.Bill.java" Intrnl_Id="206">
+<LocList>
+<Loc EndOffset="6865" SrcFileId="1" StartOffset="6840"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S111" CovItemPrefix="bill.Bill.java" Intrnl_Id="207">
+<LocList>
+<Loc EndOffset="6883" SrcFileId="1" StartOffset="6877"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B30" CovItemPrefix="bill.Bill.java" Implct="true" Intrnl_Id="208">
+<Cond/>
+<LocList/>
+<StmntSeq Intrnl_Id="209">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="6711" SrcFileId="1" StartOffset="6709"/>
+<LocList>
+<Loc EndOffset="6894" SrcFileId="1" StartOffset="6709"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S112" CovItemPrefix="bill.Bill.java" Intrnl_Id="210">
+<LocList>
+<Loc EndOffset="6910" SrcFileId="1" StartOffset="6904"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B31" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="211">
+<Cond>
+<Loc EndOffset="6925" SrcFileId="1" StartOffset="6918"/>
+</Cond>
+<LocList/>
+<StmntSeq Intrnl_Id="212">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="5964" SrcFileId="1" StartOffset="5958"/>
+<LocList>
+<Loc EndOffset="6983" SrcFileId="1" StartOffset="5958"/>
+</LocList>
+</CondStmnt>
+<CondStmnt CovItemId="S113" CovItemPrefix="bill.Bill.java" Intrnl_Id="213">
+<Branch CovItemId="B32" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="214">
+<Cond>
+<Loc EndOffset="7051" SrcFileId="1" StartOffset="7033"/>
+</Cond>
+<LocList>
+<Loc EndOffset="7168" SrcFileId="1" StartOffset="7062"/>
+</LocList>
+<StmntSeq Intrnl_Id="215">
+<LocList>
+<Loc EndOffset="7117" SrcFileId="1" StartOffset="7062"/>
+<Loc EndOffset="7152" SrcFileId="1" StartOffset="7127"/>
+<Loc EndOffset="7168" SrcFileId="1" StartOffset="7162"/>
+</LocList>
+<BasicStmnt CovItemId="S114" CovItemPrefix="bill.Bill.java" Intrnl_Id="216">
+<LocList>
+<Loc EndOffset="7117" SrcFileId="1" StartOffset="7062"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S115" CovItemPrefix="bill.Bill.java" Intrnl_Id="217">
+<LocList>
+<Loc EndOffset="7152" SrcFileId="1" StartOffset="7127"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S116" CovItemPrefix="bill.Bill.java" Intrnl_Id="218">
+<LocList>
+<Loc EndOffset="7168" SrcFileId="1" StartOffset="7162"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B33" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="219">
+<Cond>
+<Loc EndOffset="7195" SrcFileId="1" StartOffset="7176"/>
+</Cond>
+<LocList>
+<Loc EndOffset="7321" SrcFileId="1" StartOffset="7206"/>
+</LocList>
+<StmntSeq Intrnl_Id="220">
+<LocList>
+<Loc EndOffset="7270" SrcFileId="1" StartOffset="7206"/>
+<Loc EndOffset="7305" SrcFileId="1" StartOffset="7280"/>
+<Loc EndOffset="7321" SrcFileId="1" StartOffset="7315"/>
+</LocList>
+<BasicStmnt CovItemId="S117" CovItemPrefix="bill.Bill.java" Intrnl_Id="221">
+<LocList>
+<Loc EndOffset="7270" SrcFileId="1" StartOffset="7206"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S118" CovItemPrefix="bill.Bill.java" Intrnl_Id="222">
+<LocList>
+<Loc EndOffset="7305" SrcFileId="1" StartOffset="7280"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S119" CovItemPrefix="bill.Bill.java" Intrnl_Id="223">
+<LocList>
+<Loc EndOffset="7321" SrcFileId="1" StartOffset="7315"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B34" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="224">
+<Cond>
+<Loc EndOffset="7357" SrcFileId="1" StartOffset="7329"/>
+</Cond>
+<LocList>
+<Loc EndOffset="7504" SrcFileId="1" StartOffset="7368"/>
+</LocList>
+<StmntSeq Intrnl_Id="225">
+<LocList>
+<Loc EndOffset="7422" SrcFileId="1" StartOffset="7368"/>
+<Loc EndOffset="7453" SrcFileId="1" StartOffset="7432"/>
+<Loc EndOffset="7488" SrcFileId="1" StartOffset="7463"/>
+<Loc EndOffset="7504" SrcFileId="1" StartOffset="7498"/>
+</LocList>
+<BasicStmnt CovItemId="S120" CovItemPrefix="bill.Bill.java" Intrnl_Id="226">
+<LocList>
+<Loc EndOffset="7422" SrcFileId="1" StartOffset="7368"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S121" CovItemPrefix="bill.Bill.java" Intrnl_Id="227">
+<LocList>
+<Loc EndOffset="7453" SrcFileId="1" StartOffset="7432"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S122" CovItemPrefix="bill.Bill.java" Intrnl_Id="228">
+<LocList>
+<Loc EndOffset="7488" SrcFileId="1" StartOffset="7463"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S123" CovItemPrefix="bill.Bill.java" Intrnl_Id="229">
+<LocList>
+<Loc EndOffset="7504" SrcFileId="1" StartOffset="7498"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B35" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="230">
+<Cond>
+<Loc EndOffset="7530" SrcFileId="1" StartOffset="7512"/>
+</Cond>
+<LocList>
+<Loc EndOffset="7933" SrcFileId="1" StartOffset="7541"/>
+</LocList>
+<StmntSeq Intrnl_Id="231">
+<LocList>
+<Loc EndOffset="7725" SrcFileId="1" StartOffset="7541"/>
+<Loc EndOffset="7917" SrcFileId="1" StartOffset="7735"/>
+<Loc EndOffset="7933" SrcFileId="1" StartOffset="7927"/>
+</LocList>
+<CondStmnt CovItemId="S124" CovItemPrefix="bill.Bill.java" Intrnl_Id="232">
+<Branch CovItemId="B36" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="233">
+<Cond/>
+<LocList>
+<Loc EndOffset="7725" SrcFileId="1" StartOffset="7574"/>
+</LocList>
+<StmntSeq Intrnl_Id="234">
+<LocList>
+<Loc EndOffset="7603" SrcFileId="1" StartOffset="7587"/>
+<Loc EndOffset="7659" SrcFileId="1" StartOffset="7615"/>
+<Loc EndOffset="7696" SrcFileId="1" StartOffset="7671"/>
+<Loc EndOffset="7714" SrcFileId="1" StartOffset="7708"/>
+</LocList>
+<BasicStmnt CovItemId="S125" CovItemPrefix="bill.Bill.java" Intrnl_Id="235">
+<LocList>
+<Loc EndOffset="7603" SrcFileId="1" StartOffset="7587"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S126" CovItemPrefix="bill.Bill.java" Intrnl_Id="236">
+<LocList>
+<Loc EndOffset="7659" SrcFileId="1" StartOffset="7615"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S127" CovItemPrefix="bill.Bill.java" Intrnl_Id="237">
+<LocList>
+<Loc EndOffset="7696" SrcFileId="1" StartOffset="7671"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S128" CovItemPrefix="bill.Bill.java" Intrnl_Id="238">
+<LocList>
+<Loc EndOffset="7714" SrcFileId="1" StartOffset="7708"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B37" CovItemPrefix="bill.Bill.java" Implct="true" Intrnl_Id="239">
+<Cond/>
+<LocList/>
+<StmntSeq Intrnl_Id="240">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="7543" SrcFileId="1" StartOffset="7541"/>
+<LocList>
+<Loc EndOffset="7725" SrcFileId="1" StartOffset="7541"/>
+</LocList>
+</CondStmnt>
+<CondStmnt CovItemId="S129" CovItemPrefix="bill.Bill.java" Intrnl_Id="241">
+<Branch CovItemId="B38" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="242">
+<Cond/>
+<LocList>
+<Loc EndOffset="7917" SrcFileId="1" StartOffset="7769"/>
+</LocList>
+<StmntSeq Intrnl_Id="243">
+<LocList>
+<Loc EndOffset="7798" SrcFileId="1" StartOffset="7782"/>
+<Loc EndOffset="7851" SrcFileId="1" StartOffset="7810"/>
+<Loc EndOffset="7888" SrcFileId="1" StartOffset="7863"/>
+<Loc EndOffset="7906" SrcFileId="1" StartOffset="7900"/>
+</LocList>
+<BasicStmnt CovItemId="S130" CovItemPrefix="bill.Bill.java" Intrnl_Id="244">
+<LocList>
+<Loc EndOffset="7798" SrcFileId="1" StartOffset="7782"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S131" CovItemPrefix="bill.Bill.java" Intrnl_Id="245">
+<LocList>
+<Loc EndOffset="7851" SrcFileId="1" StartOffset="7810"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S132" CovItemPrefix="bill.Bill.java" Intrnl_Id="246">
+<LocList>
+<Loc EndOffset="7888" SrcFileId="1" StartOffset="7863"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S133" CovItemPrefix="bill.Bill.java" Intrnl_Id="247">
+<LocList>
+<Loc EndOffset="7906" SrcFileId="1" StartOffset="7900"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B39" CovItemPrefix="bill.Bill.java" Implct="true" Intrnl_Id="248">
+<Cond/>
+<LocList/>
+<StmntSeq Intrnl_Id="249">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="7737" SrcFileId="1" StartOffset="7735"/>
+<LocList>
+<Loc EndOffset="7917" SrcFileId="1" StartOffset="7735"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S134" CovItemPrefix="bill.Bill.java" Intrnl_Id="250">
+<LocList>
+<Loc EndOffset="7933" SrcFileId="1" StartOffset="7927"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B40" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="251">
+<Cond>
+<Loc EndOffset="7948" SrcFileId="1" StartOffset="7941"/>
+</Cond>
+<LocList/>
+<StmntSeq Intrnl_Id="252">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="6997" SrcFileId="1" StartOffset="6991"/>
+<LocList>
+<Loc EndOffset="8006" SrcFileId="1" StartOffset="6991"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S135" CovItemPrefix="bill.Bill.java" Intrnl_Id="253">
+<LocList>
+<Loc EndOffset="8039" SrcFileId="1" StartOffset="8014"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="17" HierarchyLvlTypeId="5" Intrnl_Id="254" Name="exitInSenate">
+<Header>
+<Loc EndOffset="8080" SrcFileId="1" StartOffset="8050"/>
+</Header>
+<LocList>
+<Loc EndOffset="8888" SrcFileId="1" StartOffset="8050"/>
+</LocList>
+<StmntSeq Intrnl_Id="255">
+<LocList>
+<Loc EndOffset="8125" SrcFileId="1" StartOffset="8091"/>
+<Loc EndOffset="8194" SrcFileId="1" StartOffset="8137"/>
+<Loc EndOffset="8850" SrcFileId="1" StartOffset="8200"/>
+<Loc EndOffset="8883" SrcFileId="1" StartOffset="8858"/>
+</LocList>
+<BasicStmnt CovItemId="S136" CovItemPrefix="bill.Bill.java" Intrnl_Id="256">
+<LocList>
+<Loc EndOffset="8125" SrcFileId="1" StartOffset="8091"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S137" CovItemPrefix="bill.Bill.java" Intrnl_Id="257">
+<LocList>
+<Loc EndOffset="8194" SrcFileId="1" StartOffset="8137"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S138" CovItemPrefix="bill.Bill.java" Intrnl_Id="258">
+<Branch CovItemId="B41" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="259">
+<Cond>
+<Loc EndOffset="8260" SrcFileId="1" StartOffset="8242"/>
+</Cond>
+<LocList>
+<Loc EndOffset="8367" SrcFileId="1" StartOffset="8271"/>
+</LocList>
+<StmntSeq Intrnl_Id="260">
+<LocList>
+<Loc EndOffset="8316" SrcFileId="1" StartOffset="8271"/>
+<Loc EndOffset="8351" SrcFileId="1" StartOffset="8326"/>
+<Loc EndOffset="8367" SrcFileId="1" StartOffset="8361"/>
+</LocList>
+<BasicStmnt CovItemId="S139" CovItemPrefix="bill.Bill.java" Intrnl_Id="261">
+<LocList>
+<Loc EndOffset="8316" SrcFileId="1" StartOffset="8271"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S140" CovItemPrefix="bill.Bill.java" Intrnl_Id="262">
+<LocList>
+<Loc EndOffset="8351" SrcFileId="1" StartOffset="8326"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S141" CovItemPrefix="bill.Bill.java" Intrnl_Id="263">
+<LocList>
+<Loc EndOffset="8367" SrcFileId="1" StartOffset="8361"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B42" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="264">
+<Cond>
+<Loc EndOffset="8394" SrcFileId="1" StartOffset="8375"/>
+</Cond>
+<LocList>
+<Loc EndOffset="8501" SrcFileId="1" StartOffset="8405"/>
+</LocList>
+<StmntSeq Intrnl_Id="265">
+<LocList>
+<Loc EndOffset="8450" SrcFileId="1" StartOffset="8405"/>
+<Loc EndOffset="8485" SrcFileId="1" StartOffset="8460"/>
+<Loc EndOffset="8501" SrcFileId="1" StartOffset="8495"/>
+</LocList>
+<BasicStmnt CovItemId="S142" CovItemPrefix="bill.Bill.java" Intrnl_Id="266">
+<LocList>
+<Loc EndOffset="8450" SrcFileId="1" StartOffset="8405"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S143" CovItemPrefix="bill.Bill.java" Intrnl_Id="267">
+<LocList>
+<Loc EndOffset="8485" SrcFileId="1" StartOffset="8460"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S144" CovItemPrefix="bill.Bill.java" Intrnl_Id="268">
+<LocList>
+<Loc EndOffset="8501" SrcFileId="1" StartOffset="8495"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B43" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="269">
+<Cond>
+<Loc EndOffset="8537" SrcFileId="1" StartOffset="8509"/>
+</Cond>
+<LocList>
+<Loc EndOffset="8644" SrcFileId="1" StartOffset="8548"/>
+</LocList>
+<StmntSeq Intrnl_Id="270">
+<LocList>
+<Loc EndOffset="8593" SrcFileId="1" StartOffset="8548"/>
+<Loc EndOffset="8628" SrcFileId="1" StartOffset="8603"/>
+<Loc EndOffset="8644" SrcFileId="1" StartOffset="8638"/>
+</LocList>
+<BasicStmnt CovItemId="S145" CovItemPrefix="bill.Bill.java" Intrnl_Id="271">
+<LocList>
+<Loc EndOffset="8593" SrcFileId="1" StartOffset="8548"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S146" CovItemPrefix="bill.Bill.java" Intrnl_Id="272">
+<LocList>
+<Loc EndOffset="8628" SrcFileId="1" StartOffset="8603"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S147" CovItemPrefix="bill.Bill.java" Intrnl_Id="273">
+<LocList>
+<Loc EndOffset="8644" SrcFileId="1" StartOffset="8638"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B44" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="274">
+<Cond>
+<Loc EndOffset="8670" SrcFileId="1" StartOffset="8652"/>
+</Cond>
+<LocList>
+<Loc EndOffset="8777" SrcFileId="1" StartOffset="8681"/>
+</LocList>
+<StmntSeq Intrnl_Id="275">
+<LocList>
+<Loc EndOffset="8726" SrcFileId="1" StartOffset="8681"/>
+<Loc EndOffset="8761" SrcFileId="1" StartOffset="8736"/>
+<Loc EndOffset="8777" SrcFileId="1" StartOffset="8771"/>
+</LocList>
+<BasicStmnt CovItemId="S148" CovItemPrefix="bill.Bill.java" Intrnl_Id="276">
+<LocList>
+<Loc EndOffset="8726" SrcFileId="1" StartOffset="8681"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S149" CovItemPrefix="bill.Bill.java" Intrnl_Id="277">
+<LocList>
+<Loc EndOffset="8761" SrcFileId="1" StartOffset="8736"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S150" CovItemPrefix="bill.Bill.java" Intrnl_Id="278">
+<LocList>
+<Loc EndOffset="8777" SrcFileId="1" StartOffset="8771"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B45" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="279">
+<Cond>
+<Loc EndOffset="8792" SrcFileId="1" StartOffset="8785"/>
+</Cond>
+<LocList/>
+<StmntSeq Intrnl_Id="280">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="8206" SrcFileId="1" StartOffset="8200"/>
+<LocList>
+<Loc EndOffset="8850" SrcFileId="1" StartOffset="8200"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S151" CovItemPrefix="bill.Bill.java" Intrnl_Id="281">
+<LocList>
+<Loc EndOffset="8883" SrcFileId="1" StartOffset="8858"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="18" HierarchyLvlTypeId="5" Intrnl_Id="282" Name="exitBillState">
+<Header>
+<Loc EndOffset="8922" SrcFileId="1" StartOffset="8894"/>
+</Header>
+<LocList>
+<Loc EndOffset="9111" SrcFileId="1" StartOffset="8894"/>
+</LocList>
+<StmntSeq Intrnl_Id="283">
+<LocList>
+<Loc EndOffset="9106" SrcFileId="1" StartOffset="8933"/>
+</LocList>
+<CondStmnt CovItemId="S152" CovItemPrefix="bill.Bill.java" Intrnl_Id="284">
+<Branch CovItemId="B46" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="285">
+<Cond>
+<Loc EndOffset="8986" SrcFileId="1" StartOffset="8965"/>
+</Cond>
+<LocList>
+<Loc EndOffset="9036" SrcFileId="1" StartOffset="8997"/>
+</LocList>
+<StmntSeq Intrnl_Id="286">
+<LocList>
+<Loc EndOffset="9020" SrcFileId="1" StartOffset="8997"/>
+<Loc EndOffset="9036" SrcFileId="1" StartOffset="9030"/>
+</LocList>
+<BasicStmnt CovItemId="S153" CovItemPrefix="bill.Bill.java" Intrnl_Id="287">
+<LocList>
+<Loc EndOffset="9020" SrcFileId="1" StartOffset="8997"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S154" CovItemPrefix="bill.Bill.java" Intrnl_Id="288">
+<LocList>
+<Loc EndOffset="9036" SrcFileId="1" StartOffset="9030"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B47" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="289">
+<Cond>
+<Loc EndOffset="9057" SrcFileId="1" StartOffset="9044"/>
+</Cond>
+<LocList>
+<Loc EndOffset="9099" SrcFileId="1" StartOffset="9068"/>
+</LocList>
+<StmntSeq Intrnl_Id="290">
+<LocList>
+<Loc EndOffset="9083" SrcFileId="1" StartOffset="9068"/>
+<Loc EndOffset="9099" SrcFileId="1" StartOffset="9093"/>
+</LocList>
+<BasicStmnt CovItemId="S155" CovItemPrefix="bill.Bill.java" Intrnl_Id="291">
+<LocList>
+<Loc EndOffset="9083" SrcFileId="1" StartOffset="9068"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S156" CovItemPrefix="bill.Bill.java" Intrnl_Id="292">
+<LocList>
+<Loc EndOffset="9099" SrcFileId="1" StartOffset="9093"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B48" CovItemPrefix="bill.Bill.java" Implct="true" Intrnl_Id="293">
+<Cond/>
+<LocList/>
+<StmntSeq Intrnl_Id="294">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="8939" SrcFileId="1" StartOffset="8933"/>
+<LocList>
+<Loc EndOffset="9106" SrcFileId="1" StartOffset="8933"/>
+</LocList>
+</CondStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="19" HierarchyLvlTypeId="5" Intrnl_Id="295" Name="setBillState">
+<Header>
+<Loc EndOffset="9164" SrcFileId="1" StartOffset="9117"/>
+</Header>
+<LocList>
+<Loc EndOffset="9631" SrcFileId="1" StartOffset="9117"/>
+</LocList>
+<StmntSeq Intrnl_Id="296">
+<LocList>
+<Loc EndOffset="9198" SrcFileId="1" StartOffset="9175"/>
+<Loc EndOffset="9626" SrcFileId="1" StartOffset="9246"/>
+</LocList>
+<BasicStmnt CovItemId="S157" CovItemPrefix="bill.Bill.java" Intrnl_Id="297">
+<LocList>
+<Loc EndOffset="9198" SrcFileId="1" StartOffset="9175"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S158" CovItemPrefix="bill.Bill.java" Intrnl_Id="298">
+<Branch CovItemId="B49" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="299">
+<Cond>
+<Loc EndOffset="9299" SrcFileId="1" StartOffset="9278"/>
+</Cond>
+<LocList>
+<Loc EndOffset="9464" SrcFileId="1" StartOffset="9310"/>
+</LocList>
+<StmntSeq Intrnl_Id="300">
+<LocList>
+<Loc EndOffset="9448" SrcFileId="1" StartOffset="9310"/>
+<Loc EndOffset="9464" SrcFileId="1" StartOffset="9458"/>
+</LocList>
+<CondStmnt CovItemId="S159" CovItemPrefix="bill.Bill.java" Intrnl_Id="301">
+<Branch CovItemId="B50" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="302">
+<Cond/>
+<LocList>
+<Loc EndOffset="9448" SrcFileId="1" StartOffset="9375"/>
+</LocList>
+<StmntSeq Intrnl_Id="303">
+<LocList>
+<Loc EndOffset="9446" SrcFileId="1" StartOffset="9377"/>
+</LocList>
+<BasicStmnt CovItemId="S160" CovItemPrefix="bill.Bill.java" Intrnl_Id="304">
+<LocList>
+<Loc EndOffset="9446" SrcFileId="1" StartOffset="9377"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B51" CovItemPrefix="bill.Bill.java" Implct="true" Intrnl_Id="305">
+<Cond/>
+<LocList/>
+<StmntSeq Intrnl_Id="306">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="9312" SrcFileId="1" StartOffset="9310"/>
+<LocList>
+<Loc EndOffset="9448" SrcFileId="1" StartOffset="9310"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S161" CovItemPrefix="bill.Bill.java" Intrnl_Id="307">
+<LocList>
+<Loc EndOffset="9464" SrcFileId="1" StartOffset="9458"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B52" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="308">
+<Cond>
+<Loc EndOffset="9485" SrcFileId="1" StartOffset="9472"/>
+</Cond>
+<LocList>
+<Loc EndOffset="9619" SrcFileId="1" StartOffset="9496"/>
+</LocList>
+<StmntSeq Intrnl_Id="309">
+<LocList>
+<Loc EndOffset="9603" SrcFileId="1" StartOffset="9496"/>
+<Loc EndOffset="9619" SrcFileId="1" StartOffset="9613"/>
+</LocList>
+<CondStmnt CovItemId="S162" CovItemPrefix="bill.Bill.java" Intrnl_Id="310">
+<Branch CovItemId="B53" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="311">
+<Cond/>
+<LocList>
+<Loc EndOffset="9603" SrcFileId="1" StartOffset="9545"/>
+</LocList>
+<StmntSeq Intrnl_Id="312">
+<LocList>
+<Loc EndOffset="9601" SrcFileId="1" StartOffset="9547"/>
+</LocList>
+<BasicStmnt CovItemId="S163" CovItemPrefix="bill.Bill.java" Intrnl_Id="313">
+<LocList>
+<Loc EndOffset="9601" SrcFileId="1" StartOffset="9547"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B54" CovItemPrefix="bill.Bill.java" Implct="true" Intrnl_Id="314">
+<Cond/>
+<LocList/>
+<StmntSeq Intrnl_Id="315">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="9498" SrcFileId="1" StartOffset="9496"/>
+<LocList>
+<Loc EndOffset="9603" SrcFileId="1" StartOffset="9496"/>
+</LocList>
+</CondStmnt>
+<BasicStmnt CovItemId="S164" CovItemPrefix="bill.Bill.java" Intrnl_Id="316">
+<LocList>
+<Loc EndOffset="9619" SrcFileId="1" StartOffset="9613"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B55" CovItemPrefix="bill.Bill.java" Implct="true" Intrnl_Id="317">
+<Cond/>
+<LocList/>
+<StmntSeq Intrnl_Id="318">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="9252" SrcFileId="1" StartOffset="9246"/>
+<LocList>
+<Loc EndOffset="9626" SrcFileId="1" StartOffset="9246"/>
+</LocList>
+</CondStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="20" HierarchyLvlTypeId="5" Intrnl_Id="319" Name="setBillStateInHouseOfCommons">
+<Header>
+<Loc EndOffset="9732" SrcFileId="1" StartOffset="9637"/>
+</Header>
+<LocList>
+<Loc EndOffset="9963" SrcFileId="1" StartOffset="9637"/>
+</LocList>
+<StmntSeq Intrnl_Id="320">
+<LocList>
+<Loc EndOffset="9798" SrcFileId="1" StartOffset="9743"/>
+<Loc EndOffset="9958" SrcFileId="1" StartOffset="9804"/>
+</LocList>
+<BasicStmnt CovItemId="S165" CovItemPrefix="bill.Bill.java" Intrnl_Id="321">
+<LocList>
+<Loc EndOffset="9798" SrcFileId="1" StartOffset="9743"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S166" CovItemPrefix="bill.Bill.java" Intrnl_Id="322">
+<Branch CovItemId="B56" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="323">
+<Cond/>
+<LocList>
+<Loc EndOffset="9958" SrcFileId="1" StartOffset="9913"/>
+</LocList>
+<StmntSeq Intrnl_Id="324">
+<LocList>
+<Loc EndOffset="9956" SrcFileId="1" StartOffset="9915"/>
+</LocList>
+<BasicStmnt CovItemId="S167" CovItemPrefix="bill.Bill.java" Intrnl_Id="325">
+<LocList>
+<Loc EndOffset="9956" SrcFileId="1" StartOffset="9915"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B57" CovItemPrefix="bill.Bill.java" Implct="true" Intrnl_Id="326">
+<Cond/>
+<LocList/>
+<StmntSeq Intrnl_Id="327">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="9806" SrcFileId="1" StartOffset="9804"/>
+<LocList>
+<Loc EndOffset="9958" SrcFileId="1" StartOffset="9804"/>
+</LocList>
+</CondStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="21" HierarchyLvlTypeId="5" Intrnl_Id="328" Name="setBillStateInSenate">
+<Header>
+<Loc EndOffset="10040" SrcFileId="1" StartOffset="9969"/>
+</Header>
+<LocList>
+<Loc EndOffset="10223" SrcFileId="1" StartOffset="9969"/>
+</LocList>
+<StmntSeq Intrnl_Id="329">
+<LocList>
+<Loc EndOffset="10090" SrcFileId="1" StartOffset="10051"/>
+<Loc EndOffset="10218" SrcFileId="1" StartOffset="10096"/>
+</LocList>
+<BasicStmnt CovItemId="S168" CovItemPrefix="bill.Bill.java" Intrnl_Id="330">
+<LocList>
+<Loc EndOffset="10090" SrcFileId="1" StartOffset="10051"/>
+</LocList>
+</BasicStmnt>
+<CondStmnt CovItemId="S169" CovItemPrefix="bill.Bill.java" Intrnl_Id="331">
+<Branch CovItemId="B58" CovItemPrefix="bill.Bill.java" Implct="false" Intrnl_Id="332">
+<Cond/>
+<LocList>
+<Loc EndOffset="10218" SrcFileId="1" StartOffset="10181"/>
+</LocList>
+<StmntSeq Intrnl_Id="333">
+<LocList>
+<Loc EndOffset="10216" SrcFileId="1" StartOffset="10183"/>
+</LocList>
+<BasicStmnt CovItemId="S170" CovItemPrefix="bill.Bill.java" Intrnl_Id="334">
+<LocList>
+<Loc EndOffset="10216" SrcFileId="1" StartOffset="10183"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</Branch>
+<Branch CovItemId="B59" CovItemPrefix="bill.Bill.java" Implct="true" Intrnl_Id="335">
+<Cond/>
+<LocList/>
+<StmntSeq Intrnl_Id="336">
+<LocList/>
+</StmntSeq>
+</Branch>
+<Keyword EndOffset="10098" SrcFileId="1" StartOffset="10096"/>
+<LocList>
+<Loc EndOffset="10218" SrcFileId="1" StartOffset="10096"/>
+</LocList>
+</CondStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="22" HierarchyLvlTypeId="5" Intrnl_Id="337" Name="delete">
+<Header>
+<Loc EndOffset="10249" SrcFileId="1" StartOffset="10229"/>
+</Header>
+<LocList>
+<Loc EndOffset="10255" SrcFileId="1" StartOffset="10229"/>
+</LocList>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="23" HierarchyLvlTypeId="5" Intrnl_Id="338" Name="toString">
+<Header>
+<Loc EndOffset="10287" SrcFileId="1" StartOffset="10263"/>
+</Header>
+<LocList>
+<Loc EndOffset="10446" SrcFileId="1" StartOffset="10263"/>
+</LocList>
+<StmntSeq Intrnl_Id="339">
+<LocList>
+<Loc EndOffset="10322" SrcFileId="1" StartOffset="10297"/>
+<Loc EndOffset="10441" SrcFileId="1" StartOffset="10328"/>
+</LocList>
+<BasicStmnt CovItemId="S171" CovItemPrefix="bill.Bill.java" Intrnl_Id="340">
+<LocList>
+<Loc EndOffset="10322" SrcFileId="1" StartOffset="10297"/>
+</LocList>
+</BasicStmnt>
+<BasicStmnt CovItemId="S172" CovItemPrefix="bill.Bill.java" Intrnl_Id="341">
+<LocList>
+<Loc EndOffset="10441" SrcFileId="1" StartOffset="10328"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="24" HierarchyLvlTypeId="5" Intrnl_Id="342" Name="stateExpected">
+<Header>
+<Loc EndOffset="10521" SrcFileId="1" StartOffset="10479"/>
+</Header>
+<LocList>
+<Loc EndOffset="10578" SrcFileId="1" StartOffset="10479"/>
+</LocList>
+<StmntSeq Intrnl_Id="343">
+<LocList>
+<Loc EndOffset="10573" SrcFileId="1" StartOffset="10528"/>
+</LocList>
+<BasicStmnt CovItemId="S173" CovItemPrefix="bill.Bill.java" Intrnl_Id="344">
+<LocList>
+<Loc EndOffset="10573" SrcFileId="1" StartOffset="10528"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="25" HierarchyLvlTypeId="5" Intrnl_Id="345" Name="houseStateExpected">
+<Header>
+<Loc EndOffset="10633" SrcFileId="1" StartOffset="10586"/>
+</Header>
+<LocList>
+<Loc EndOffset="10722" SrcFileId="1" StartOffset="10586"/>
+</LocList>
+<StmntSeq Intrnl_Id="346">
+<LocList>
+<Loc EndOffset="10717" SrcFileId="1" StartOffset="10640"/>
+</LocList>
+<BasicStmnt CovItemId="S174" CovItemPrefix="bill.Bill.java" Intrnl_Id="347">
+<LocList>
+<Loc EndOffset="10717" SrcFileId="1" StartOffset="10640"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+<HierarchyLvl HierarchyLvlId="26" HierarchyLvlTypeId="5" Intrnl_Id="348" Name="senateStateExpected">
+<Header>
+<Loc EndOffset="10778" SrcFileId="1" StartOffset="10730"/>
+</Header>
+<LocList>
+<Loc EndOffset="10851" SrcFileId="1" StartOffset="10730"/>
+</LocList>
+<StmntSeq Intrnl_Id="349">
+<LocList>
+<Loc EndOffset="10846" SrcFileId="1" StartOffset="10785"/>
+</LocList>
+<BasicStmnt CovItemId="S175" CovItemPrefix="bill.Bill.java" Intrnl_Id="350">
+<LocList>
+<Loc EndOffset="10846" SrcFileId="1" StartOffset="10785"/>
+</LocList>
+</BasicStmnt>
+</StmntSeq>
+</HierarchyLvl>
+</HierarchyLvl>
+</HierarchyLvl>
+</HierarchyLvl>
+</MASTRoot>
+</TestSessionContainer>

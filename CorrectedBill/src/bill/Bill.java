@@ -124,8 +124,9 @@ public class Bill
     switch (aBillState)
     {
       case inHouseOfCommons:    	  
-        setBillStateInHouseOfCommons(BillStateInHouseOfCommons.secondReading);
-        wasEventProcessed = true;
+    	exitBillState();
+    	setBillState(BillState.withdrawn);
+    	wasEventProcessed = true;
         break;
       case inSenate:
         exitBillState();
@@ -279,7 +280,6 @@ public class Bill
         break;
       case committeeConsiderationS:
         setBillStateInSenate(BillStateInSenate.thirdReadingS);
-        isCommonsBill = true;
         wasEventProcessed = true;
         break;
       case thirdReadingS:
