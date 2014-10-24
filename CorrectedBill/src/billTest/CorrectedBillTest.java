@@ -8,10 +8,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bill.Bill;
+import bill.CorrectedBill;
 
-public class BillTest {
-	Bill test;
+public class CorrectedBillTest {
+	CorrectedBill test;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	
@@ -23,7 +23,7 @@ public class BillTest {
 
 	@Before
 	public void setUp() throws Exception {
-		test = new Bill();
+		test = new CorrectedBill();
 	}
 
 	@After

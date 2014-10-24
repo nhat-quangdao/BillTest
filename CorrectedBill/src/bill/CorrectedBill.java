@@ -3,7 +3,7 @@ package bill;
 /**
  * State machine of a bill in Canadian parliament
  */
-public class Bill
+public class CorrectedBill
 {
 
   //------------------------
@@ -25,7 +25,7 @@ public class Bill
   // CONSTRUCTOR
   //------------------------
 
-  public Bill()
+  public CorrectedBill()
   {
     isCommonsBill = true;
     setBillStateInHouseOfCommons(BillStateInHouseOfCommons.Null);
